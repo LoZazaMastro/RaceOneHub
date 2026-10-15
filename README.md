@@ -12,6 +12,18 @@ No game executable, SDK DLL, game artwork, archive, save, private research log, 
 
 The preview uses example folder paths. No game content appears in the image.
 
+## How to play
+
+You need your own complete, extracted Xbox One copy of Forza Motorsport 5, version **1.0.0.20**, and the locally prepared runtime described in [Building and required inputs](docs/BUILDING.md).
+
+1. Open `RaceOneHub.exe` and select the game folder containing `Mount` and `EmbeddedXvd`.
+2. Choose an output location. The builder creates a **Forza Motorsport 5** folder there for the executable and its supporting files.
+3. Choose your video, audio and language settings. Leave **Skip pre-game settings** unchecked if you want to adjust them before each launch. You can also create a Desktop shortcut.
+4. Click **Build EXE** and wait for it to finish.
+5. Open the generated `RaceOne5.exe`, or use the Desktop shortcut. If the pre-game screen is enabled, select **Start game**.
+
+Keep the generated files together and leave the original game folder in place. The game reads its files from that folder; moving or deleting it will stop the game from launching.
+
 ## Options
 
 - Resolutions from 1080p to 8K; 30, 60 and 120 FPS targets.
