@@ -10,6 +10,14 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
+        string? portableRoot;
+        try { portableRoot = PortablePayload.Prepare(); }
+        catch (Exception ex)
+        {
+            if (e.Args.Length == 2 && e.Args[0] is "--check-backend" or "--self-test") File.WriteAllText(e.Args[1], ex.ToString());
+            else MessageBox.Show(ex.Message, "Race One Hub", MessageBoxButton.OK, MessageBoxImage.Error);
+            Shutdown(1); return;
+        }
         if (e.Args.Length == 2 && e.Args[0] == "--self-test")
         {
             try { SelfTests.Run(e.Args[1]); Shutdown(0); }
@@ -22,7 +30,7 @@ public partial class App : Application
             {
                 Task.Run(async () =>
                 {
-                    var model = new LauncherModel(LauncherModel.FindProject(AppContext.BaseDirectory));
+                    var model = new LauncherModel(portableRoot ?? LauncherModel.FindProject(AppContext.BaseDirectory));
                     await model.RefreshAsync();
                     File.WriteAllText(e.Args[1], System.Text.Json.JsonSerializer.Serialize(new { passed = true, capabilities = model.Backend, canBuild = model.CanBuild, options = model.Values(), optionCounts = model.All.ToDictionary(o => o.Key, o => o.Choices.Length), scope = "Read-only capabilities; no settings applied or game launched." }, LauncherModel.Json));
                 }).GetAwaiter().GetResult();
@@ -32,7 +40,7 @@ public partial class App : Application
             return;
         }
         var preview = e.Args.Length == 2 && (e.Args[0] == "--render-preview" || e.Args[0] == "--render-video" || e.Args[0] == "--render-audio" || e.Args[0] == "--render-credits");
-        var window = new MainWindow(preview);
+        var window = new MainWindow(preview, portableRoot);
         MainWindow = window;
         if (preview)
         {

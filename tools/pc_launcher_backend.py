@@ -113,6 +113,8 @@ def capabilities(root, game_folder=None, game_id="fm5"):
     manifest = json.loads(manifest_path.read_text('utf-8')) if manifest_path.is_file() else {}
     ready = bool(manifest.get('ready')) and all((root / game.runtime / p).is_file()
         for p in ['ForzaMastro5.exe', 'ForzaMastro5Bridge.dll', 'data/RaceOneEngine.ini'])
+    if manifest.get('bridge_template') and not (root / 'runtime/bridge-template.json').is_file():
+        ready = False
     selected_game = str(game_folder or ini.get('launcher', 'game_folder', fallback=''))
     if Path(selected_game).name.casefold() == 'mount':
         selected_game = str(Path(selected_game).parent)
@@ -245,9 +247,19 @@ def build_game(root, settings, output, game_folder=None, desktop_shortcut=False,
             progress(dict(phase='creating_executable', bytes_copied=game_reference['override_bytes'],
                           total_bytes=game_reference['override_bytes'], files_copied=0, total_files=0))
             runtime = stage
-            for name in ['ForzaMastro5.exe', 'ForzaMastro5Bridge.dll']:
-                shutil.copy2(root / game.runtime / name,
-                             runtime / (output.name if name.endswith('.exe') else name))
+            shutil.copy2(root / game.runtime / 'ForzaMastro5.exe', runtime / output.name)
+            template_manifest = root / 'runtime/bridge-template.json'
+            if template_manifest.is_file():
+                # The distributed DLL is deliberately incomplete. Recover its
+                # private guards/shaders ONLY from the selected owner's game,
+                # into this new output bundle; never mutate the shared cache.
+                from fm5_bridge_template import hydrate_bridge
+                hydrate_bridge(root / game.runtime / 'ForzaMastro5Bridge.dll',
+                    template_manifest, game_folder / 'Mount/forza_durango_release_final.exe',
+                    root / game.runtime / 'ForzaMastro5.exe', runtime / 'ForzaMastro5Bridge.dll')
+            else:
+                shutil.copy2(root / game.runtime / 'ForzaMastro5Bridge.dll',
+                             runtime / 'ForzaMastro5Bridge.dll')
             icon = root / ('launcher/ForzaMastro.Launcher/Assets/ForzaMotorsport' +
                            '5' + '.ico')
             embed_icon_in_place(runtime / output.name, icon)
@@ -264,8 +276,9 @@ def build_game(root, settings, output, game_folder=None, desktop_shortcut=False,
                             ignore=shutil.ignore_patterns('*.obj', '*.lib', '*.exp'))
             for name in game.sdk_libraries:
                 shutil.copy2(game_folder / 'EmbeddedXvd/Windows/System32' / name, stage / 'xg-host' / name)
-            assets = root / 'pregame/assets'
-            background = assets / 'fm5-background-clean.png'
+            background = root / game.runtime / 'data/ui/fm5-background-clean.png'
+            if settings['show_pre_game'] and not background.is_file():
+                raise RuntimeError('The prepared native pre-game background is missing. Prepare the runtime again.')
             if background.is_file():
                 (stage / 'data/ui').mkdir(parents=True)
                 shutil.copy2(background, stage / 'data/ui' / background.name)

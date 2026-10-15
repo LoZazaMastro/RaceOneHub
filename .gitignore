@@ -41,4 +41,10 @@ settings.json
 /src/allocation-port/fm5_resolve_original_guard.inc
 /src/allocation-port/fm5_resolve_four_samples.inc
 /src/allocation-port/fm5_resolve_eight_samples.inc
-/pregame/
+/pregame/*
+!/pregame/Assets/
+/pregame/Assets/*
+!/pregame/Assets/fm5-background-clean.png
+
+# Private temporary runtime-preparation trees can contain user-derived inputs.
+**/.raceone-prepare-*/

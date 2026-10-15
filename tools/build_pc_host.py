@@ -19,6 +19,8 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[1]
 parser = argparse.ArgumentParser()
 parser.add_argument('--graphics-adapters', action='store_true')
+parser.add_argument('--engine-folder', type=Path)
+parser.add_argument('--game-folder', type=Path)
 parser.add_argument('--d3d12-diagnostics', action='store_true')
 parser.add_argument('--gamepad-diagnostics', action='store_true')
 parser.add_argument('--frame-timing', action='store_true')
@@ -32,11 +34,11 @@ if arguments.d3d12_diagnostics and not arguments.graphics_adapters:
 add_python_libraries(__file__)
 import pefile
 
-SOURCE = ROOT / 'runtime/azimuth-0.9.9-original'
+SOURCE = arguments.engine_folder.resolve() if arguments.engine_folder else ROOT / 'runtime/azimuth-0.9.9-original'
 OUT = ROOT / 'runtime/pc'
 BUILD = ROOT / 'analysis/pc-build'
 BUILD.mkdir(parents=True, exist_ok=True)
-GAME = ROOT / 'game/Forza_1.0.0.20_x64__8wekyb3d8bbwe'
+GAME = arguments.game_folder.resolve() if arguments.game_folder else ROOT / 'game/Forza_1.0.0.20_x64__8wekyb3d8bbwe'
 PLAY_GAME = GAME
 EXPECTED = '579ed8d8b0b16cbf7890380cb7b925c972b837631ede367eada55eae4afc39bc'
 original = (SOURCE / 'azimuth.exe').read_bytes()
@@ -260,7 +262,7 @@ for call_rva, expected, index in [(0x3af4f, 'e83cf3ffff', 0), (0x3ceac, 'e8ff260
     patch(call_rva, bytes.fromhex(expected), replacement, 'Route through FM5 bridge')
 
 if arguments.graphics_adapters:
-    draw_observer_recipe = json.loads((ROOT / 'analysis/graphics-port/native-draw-observer-recipe.json').read_text())
+    draw_observer_recipe = json.loads((ROOT / 'recipes/native-draw-observer.json').read_text())
     validate_draw_observer(data, draw_observer_recipe, require_original=False)
     prepare_stub = code_rva + import_names.index('FM5PrepareGraphicsObserved') * 6
     for site in draw_observer_recipe['callsites']:
@@ -279,7 +281,8 @@ if arguments.graphics_adapters:
         patch(0x1364b9, bytes.fromhex('498bd5498bccffd0'),
               b'\xe8' + struct.pack('<i', pso_stub_rva - 0x1364b9 - 5) + b'\x90' * 3,
               'Record exact failing pipeline sample descriptor and actual device capabilities without altering the call')
-    proof = json.loads((ROOT / 'analysis/audio-tls/tls-boundary/guest-vector-cfg-proof.json').read_text())
+    from fm5_tls_recipe import validate_tls_recipe
+    proof = validate_tls_recipe(GAME / 'Mount/forza_durango_release_final.exe', ROOT / 'src/audio-tls/guest_tls_sites.h')
     assert proof['total_sites'] == 327
     assert proof['game_sha256'] == '94dad21851d335e9a33231dc2a1de2ecd4b93eefdf5f6772085bf6886bf47db7'
     assert proof['classification_counts'] == {'safe_vector0_only': 325, 'exact_preserving_double_load': 2}
@@ -387,8 +390,10 @@ assert [entry.name for entry in verified.DIRECTORY_ENTRY_IMPORT[-1].imports] == 
 assert all(not (tail_start <= entry.rva < tail_end and entry.type)
            for block in verified.DIRECTORY_ENTRY_BASERELOC for entry in block.entries)
 OUT.mkdir(parents=True, exist_ok=True)
-shutil.copytree(SOURCE / 'data', OUT / 'data', dirs_exist_ok=True,
-                ignore=shutil.ignore_patterns('azimuth.ini', 'azimuth.log', 'azimuth.pipelines'))
+(OUT / 'data/bin').mkdir(parents=True, exist_ok=True)
+for dependency in ['avcodec-62.dll', 'avutil-60.dll', 'azimuth-tls.dll', 'msvcp110.dll', 'msvcr110.dll']:
+    shutil.copy2(SOURCE / 'data/bin' / dependency, OUT / 'data/bin' / dependency)
+shutil.copy2(SOURCE / 'data/licenses.txt', OUT / 'data/licenses.txt')
 with tempfile.TemporaryDirectory(prefix='scene-overrides-', dir=BUILD.resolve()) as scene_stage:
     stage_scene_overrides(GAME.resolve(), scene_stage, arguments.frame_rate)
     shutil.copytree(Path(scene_stage) / 'data/scene-overrides', OUT / 'data/scene-overrides', dirs_exist_ok=True)

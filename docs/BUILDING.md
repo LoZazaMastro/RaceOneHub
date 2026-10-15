@@ -1,41 +1,41 @@
-# Building and required inputs
+# Developer build instructions
 
-## Interface and protocol tests
+These instructions are for building Race One Hub from source. They are not prerequisites for using the single-file `RaceOneHub.exe` download. End users supply only their own extracted FM5 folder.
 
-Requirements: Windows x64 and the .NET 8 SDK. Build the WPF project with `dotnet build launcher/ForzaMastro.Launcher/ForzaMastro.Launcher.csproj -c Release`. Run the resulting `RaceOneHub.exe --self-test ABS_REPORT_PATH` for model, typed settings, persistence and offscreen-layout fixtures. It does not launch a game.
+## Interface and support container
 
-Python preparation tools require Python 3.11 or newer and the packages in `requirements.txt`. Use an isolated virtual environment; activate it before running the development frontend so its `python` backend command uses that environment. Installed tooling and environments are not repository content.
+Use Windows x64 and the .NET 8 SDK:
 
-## User-supplied inputs
+```powershell
+dotnet build launcher/ForzaMastro.Launcher/ForzaMastro.Launcher.csproj -c Release
+```
 
-| Input | Expected identity / purpose |
-| --- | --- |
-| Extracted Forza Motorsport 5 | Package `Forza_1.0.0.20_x64__8wekyb3d8bbwe`, complete `Mount` and `EmbeddedXvd` directories. Game EXE SHA-256 `94dad21851d335e9a33231dc2a1de2ecd4b93eefdf5f6772085bf6886bf47db7`. |
-| Original Azimuth 0.9.9 directory | `azimuth.exe` SHA-256 `579ed8d8b0b16cbf7890380cb7b925c972b837631ede367eada55eae4afc39bc`, accompanying TLS/audio/CRT dependencies and supplied license notices. Obtain it separately from its original provider. |
-| Modern host XG implementation | Current private native path requires an eight-method XG implementation with SHA-256 `9e3a06d02784699c252bea271090b9e2a04ef2cb29b5b0647c6ce6e73b19db67`. This Microsoft SDK component is not supplied. The FM5 guest retains its own SDK XG libraries. A replacement/removal of the extra dependency remains future work. |
-| Native build tooling | Visual Studio 2022 C++/MASM and Windows SDK. Development scripts currently name MSVC 14.44.35207 and Windows SDK 10.0.26100.0; review paths for your installation. |
+`RaceOneHub.exe --self-test ABS_REPORT_PATH` checks settings, persistence, backend requests and component extraction with offscreen UI fixtures. It does not launch a game. `--check-backend ABS_REPORT_PATH` reads backend capabilities without generating an executable or starting a game.
 
-`python tools/prepare_inputs.py --game-folder ABS_GAME_ROOT --azimuth-directory ABS_ENGINE_ROOT` validates explicit inputs without extracting, copying or executing them. This command does not prepare a complete runtime.
+The release interface is published self-contained, so the user does not need a separate .NET installation:
 
-## Native source preparation gaps
+```powershell
+dotnet publish launcher/ForzaMastro.Launcher/ForzaMastro.Launcher.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -p:RaceOnePayload=ABS_SUPPORT_ARCHIVE
+```
 
-The adapter source and exact metadata/patch recipes are included. Four include files deliberately stay out of the source release because they contain long original code guards or original/derived game shader data:
+`RaceOnePayload` embeds the reviewed support archive as `RaceOneHub.Support.zip`. The archive is an internal resource, not a second download. `tools/build_single_exe_support.py` builds it from an explicit file/provenance map. Its manifest records each relative path, size and SHA-256. The app validates the archive and extracts its contents atomically to `%LOCALAPPDATA%\RaceOneHub\components\<payload-hash>`. It rechecks cached component hashes on later starts.
 
-- `src/allocation-port/fm5_language_guards.inc`
-- `src/allocation-port/fm5_resolve_original_guard.inc`
-- `src/allocation-port/fm5_resolve_four_samples.inc`
-- `src/allocation-port/fm5_resolve_eight_samples.inc`
+Only named support files enter the payload. The actual game executable, game assets, SDK libraries taken from the user's game, saves, logs and private development files must stay out. The authorized pre-game background is the sole game-artwork exception. Never package an entire private runtime directory or development checkout.
 
-`build_language_tests.py` contains user-local guard generation from pinned originals. Shader include preparation is not yet a clean-checkout automated workflow; the MSAA fixture scripts consume those generated inputs and do not replace that missing preparation step. Some development recipes additionally expect user-local proof metadata under `analysis`. Consequently `tools/build_pc_bridge.py` / `build_pc_host.py` are preserved development recipes, not a one-command supported clean-machine runtime build.
+## Native engine and adapter development
 
-No placeholder shaders, fake backends or unconditional readiness manifests are supplied to conceal these gaps. Locally prepared binaries and generated data must remain ignored.
+Native development requires the Visual Studio 2022 x64 C++ compiler, MASM and Windows SDK. The verified developer toolchain is MSVC 14.44.35207 with Windows SDK 10.0.26100.0. Python 3.11+ is used for patch recipes, tests and packaging; the backend is frozen for the release, so Python is not required on the user's PC.
 
-## Backend layout after independent preparation
+The compatibility host is derived from Azimuth 0.9.9. It is not rebuilt from these adapter sources. Developer host preparation requires that exact original engine and its notices; native source and recipe files do not substitute for the engine. Original game/engine identity checks are recorded in `recipes/runtime-inputs.json` and the other reviewed recipe files. All external copyrights and license notices remain applicable.
 
-The builder reads a prepared `runtime/pc/ForzaMastro5.exe`, `ForzaMastro5Bridge.dll`, `data/RaceOneEngine.ini`, runtime dependency DLLs and a truthful `launcher-capabilities.json`. The host XG dependencies live under `runtime/xg-host`. These paths are ignored and are not part of this source release. Optional user-supplied pre-game background artwork is likewise private.
+The four ignored language/shader includes contain game-dependent data and are generated locally for developer builds with `tools/generate_fm5_includes.py`. They must not enter Git or be embedded as populated game-data arrays in the public builder. The single-file packaging path uses an unhydrated adapter template; the builder fills the required data from the user's selected FM5 folder before writing the private generated output. Developer template-generation and hydration tools must retain exact bounds, identity checks and negative tests.
 
-The public backend stays unready when required inputs are absent. Creating a manifest without preparing and validating the native runtime is not a supported shortcut.
+`tools/stage_single_exe_runtime.py` is a developer staging tool. Its explicit allowlist excludes both XG libraries from the user's game and the modern SDK XG dependency used by earlier private builds. Build the native adapter with `tools/build_pc_bridge.py --graphics-adapters --portable-xg`; this selects the authored adapter for the XG libraries in the user's FM5 folder. No modern XG library is shipped. Use `tools/fm5_bridge_template.py make-template` to strip the developer-built DLL, then stage that template and its manifest. The actual builder hydrates the template only inside each new generated output, leaving the shared component cache unchanged. Earlier `prepare_public_runtime.py` experiments are developer diagnostics, not an installation step or required download for end users.
 
-## Private generated output
+## Verification and publication
 
-A local `RaceOne5.exe` output references the user's original game folder. Only six small scene overrides are derived alongside the runtime; saves use the current Windows user's Saved Games folder. Generation requires an empty output directory outside the source game. Desktop shortcuts are optional. Do not distribute generated output folders, user-derived overrides, SDK libraries, saves or caches as this project's public release.
+Compiling the UI, reading capabilities, compiling an adapter and booting a generated game are separate checks. An embedded archive that extracts correctly is not proof that gameplay works. Before release, verify the actual frozen backend generates an FM5 output from only the selected original game folder, then check that output's pre-game and game startup. Keep the result tied to the exact final executable and payload hashes.
+
+The known washed-out Career-menu issue remains documented in the README. Do not turn a packaging or bootstrap test into a claim that all gameplay has been validated.
+
+Do not commit or publish generated `RaceOne5.exe` folders, hydrated adapters, user-derived include files, SDK libraries, saves or caches. The public binary artifact is the single reviewed `RaceOneHub.exe`, accompanied by source and third-party notices as required by their licenses.

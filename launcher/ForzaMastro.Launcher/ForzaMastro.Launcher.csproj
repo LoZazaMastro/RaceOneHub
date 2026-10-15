@@ -8,4 +8,7 @@
     <ApplicationIcon>Assets/Builder.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup><Resource Include="Assets/Builder.png" /></ItemGroup>
+  <ItemGroup Condition="'$(RaceOnePayload)' != ''">
+    <EmbeddedResource Include="$(RaceOnePayload)" LogicalName="RaceOneHub.Support.zip" />
+  </ItemGroup>
 </Project>

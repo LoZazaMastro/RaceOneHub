@@ -4,6 +4,16 @@
 #include <string.h>
 #include <wchar.h>
 
+#ifdef FM5_USE_PORTABLE_XG
+#include "fm5_portable_xg.h"
+
+__declspec(dllexport) HRESULT WINAPI FM5CreateHostTextureComputer(
+    const void *description, void **out, void *original_factory) {
+    return FM5PortableCreateHostTextureComputer(description, out, original_factory);
+}
+
+#else
+
 typedef HRESULT (WINAPI *TextureFactory)(const void *, void **);
 typedef ULONG (WINAPI *TextureRelease)(void *);
 static HMODULE modern_module;
@@ -119,3 +129,4 @@ __declspec(dllexport) HRESULT WINAPI FM5CreateHostTextureComputer(
         ((TextureRelease)(*(void ***)original)[1])(original);
     return hr;
 }
+#endif

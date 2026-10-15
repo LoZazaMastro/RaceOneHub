@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "engine_version": "0.9.9",
+  "engine_files": {
+    "azimuth.exe": {
+      "bytes": 3475968,
+      "sha256": "579ed8d8b0b16cbf7890380cb7b925c972b837631ede367eada55eae4afc39bc"
+    },
+    "data/licenses.txt": {
+      "bytes": 30122,
+      "sha256": "9379717cc27993f00639b3a1c2f0833205cd77f1fb6b9fa7867e5bb813c1946b"
+    },
+    "data/bin/avcodec-62.dll": {
+      "bytes": 492544,
+      "sha256": "fe8437a6ce115e4a7639da68690aac00188cae0fccc7148dc04afab65fffd618"
+    },
+    "data/bin/avutil-60.dll": {
+      "bytes": 971264,
+      "sha256": "22a5a7c70ec3541ad5e50aa973c438b66de4516002c90e1caa396ef29e4153af"
+    },
+    "data/bin/azimuth-tls.dll": {
+      "bytes": 4608,
+      "sha256": "ffa229b6c62228bf6126de6f140c6a70326c536524bec00f9304ac6591805bb7"
+    },
+    "data/bin/msvcp110.dll": {
+      "bytes": 680032,
+      "sha256": "dd8377b03ba5ba21251ab8e4eebf9b8a9624b59aebcdfc1be078c6513db1640d"
+    },
+    "data/bin/msvcr110.dll": {
+      "bytes": 847448,
+      "sha256": "0b3ec2efbdd40f01326e993449a4cee5bf7e709c98f5c2920dbf1c4d983e8221"
+    }
+  },
+  "modern_xg": {
+    "bytes": 103936,
+    "sha256": "9e3a06d02784699c252bea271090b9e2a04ef2cb29b5b0647c6ce6e73b19db67"
+  },
+  "game_sdk": {
+    "xg.dll": {
+      "bytes": 90112,
+      "sha256": "dcea8f44cb4049695ed9f5890bc4e24a4c2e3e75d082333e3f388f509395a522"
+    },
+    "xg_x.dll": {
+      "bytes": 90112,
+      "sha256": "9d198fcf130793cf0e2c742ff7e934bfd87c8ced0940b189413e52d6e874125a"
+    }
+  },
+  "scope": "Hashes and lengths only; original inputs are never bundled."
+}

@@ -16,12 +16,13 @@ ASSETS = {
     'launcher/ForzaMastro.Launcher/Assets/ForzaMotorsport5.ico',
     'docs/screenshots/builder.png',
     'docs/screenshots/video.png',
+    'pregame/Assets/fm5-background-clean.png',
 }
 PRIVATE_INCLUDES = {
     'fm5_language_guards.inc', 'fm5_resolve_original_guard.inc',
     'fm5_resolve_four_samples.inc', 'fm5_resolve_eight_samples.inc',
 }
-ALLOWED_ROOTS = {'src', 'tools', 'launcher', 'recipes', 'docs'}
+ALLOWED_ROOTS = {'src', 'tools', 'launcher', 'recipes', 'docs', 'pregame'}
 
 
 def audit():
@@ -52,12 +53,12 @@ def audit():
             if raw.startswith((b'MZ', b'DXBC', b'PK\x03\x04')):
                 raise ValueError('Binary payload disguised as source: ' + name)
         files.append({'path': name, 'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest(),
-                      'origin': 'Authored builder/icon asset' if asset else 'Authored/adapted project source, test, metadata or documentation'})
+                      'origin': ('Forza Motorsport 5 pre-game artwork; Microsoft and respective rights holders' if name == 'pregame/Assets/fm5-background-clean.png' else 'Authored builder/icon asset') if asset else 'Authored/adapted project source, test, metadata or documentation'})
     return {'scope': 'FM5-only authored source snapshot; not a binary/game distribution',
             'passed': True, 'files_verified': len(files),
             'bytes': sum(f['bytes'] for f in files), 'files': files,
             'native_runtime_included': False, 'game_or_sdk_files_included': False,
-            'native_runtime_build_complete': False}
+            'native_runtime_build_evidence': 'Not evaluated by this source-only audit'}
 
 
 if __name__ == '__main__':

@@ -1,23 +1,51 @@
 Race One Hub - Designed by LoZazaMastro
 
+Authored builder UI and compatibility adapters
+-------------------------------------------
 The WPF theme and layout are adapted from The Simpsons Game PS5 Builder,
 by LoZazaMastro and contributors, supplied by its author under GPL-3.0.
-Adapted source and the complete GPL-3.0 license accompany this source release.
-Changes include the authored orange/white/black theme, FM5 builder workflow,
-typed backend protocol, input/output selection, and authored numeric/tyre icons.
-No font file or game artwork is included.
+Changes include the orange/white/black theme, FM5 builder workflow, typed
+backend protocol, input/output selection and authored numeric/tyre icons.
+The GPL-3.0 license and corresponding project source are available at:
+https://github.com/LoZazaMastro/RaceOneHub
+No font file is included.
 
-Azimuth: https://almost-there-games.itch.io/azimuth
+Pre-game background
+-------------------
+Artwork from Forza Motorsport 5. Rights remain with Microsoft and the
+respective rights holders. This is the only included game artwork.
+
+Azimuth
+-------
+Copyright © 2026 Almost There Games. All rights reserved.
 Creator: Almost There Games, https://almost-there-games.itch.io/
-The compatibility adapters target this separately supplied external engine.
-Original/adapted engine binaries, its audio/CRT/TLS dependencies and SDK XG
-libraries are not included. Their own notices and terms remain applicable.
-This project's GPL license does not relicense those external inputs.
+Project: https://almost-there-games.itch.io/azimuth
+The compatibility host is adapted from Azimuth 0.9.9. Its original copyright
+and license terms remain unchanged. This project's GPL license does not
+relicense the engine, its dependencies, Microsoft components or the game.
+The complete original engine notices are preserved in the extracted
+component path runtime/pc/data/licenses.txt and in data/licenses.txt beside
+the generated game executable.
 
-Research/API references:
+The engine notices identify FFmpeg 8.1.3 under LGPL-2.1, with Almost There
+Games' XMA decoder change and source request contact preserved verbatim in
+that file; libdeflate under MIT; and mingw-w64 runtime under ZPL-2.1.
+Do not replace those notices or attribute the engine to this project.
+
+Single-file support components
+------------------------------
+The self-contained builder includes the .NET/WPF runtime and its frozen
+Python backend. Their original notices are included in the extracted
+licenses directory: .NET/WPF, Python, pefile, PyInstaller (including its
+bootloader exception), altgraph and pywin32-ctypes. These retain their own
+licenses. The user does not install these development tools separately.
+
+Research/API references
+-----------------------
 WinDurango: https://github.com/WinDurango/WinDurango
 XWine1: https://github.com/xwine1
-These credit references, not bundled or claimed linked dependencies.
+These are research/API references, not claims that their implementations
+are bundled or linked dependencies.
 
 Forza Motorsport 5 is by Turn 10 Studios / Microsoft Studios.
 All trademarks and game content belong to their respective owners.

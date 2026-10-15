@@ -160,6 +160,7 @@ class BuilderSafetyTests(LauncherSafetyTests):
         for path in ['runtime/builder/ForzaMastro5.exe', 'runtime/pc/data/bin/codec.dll',
                      *['runtime/pc/data/bin/' + name for name in ['avcodec-62.dll','avutil-60.dll','azimuth-tls.dll','msvcp110.dll','msvcr110.dll']],
                      'runtime/pc/data/licenses.txt', 'runtime/xg-host/xg.dll',
+                     'runtime/pc/data/ui/fm5-background-clean.png',
                      'pregame/dist/ForzaMastro5.PreGame.exe']:
             file = self.root / path; file.parent.mkdir(parents=True, exist_ok=True)
             file.write_bytes(b'BUILD FIXTURE')
@@ -203,6 +204,7 @@ class BuilderSafetyTests(LauncherSafetyTests):
         self.assertFalse((self.output.parent / 'data/bin/codec.dll').exists())
         self.assertEqual({p.name for p in (self.output.parent / 'data/bin').iterdir()}, {'avcodec-62.dll','avutil-60.dll','azimuth-tls.dll','msvcp110.dll','msvcr110.dll'})
         self.assertFalse((self.output.parent / 'runtime').exists())
+        self.assertEqual((self.output.parent/'data/ui/fm5-background-clean.png').read_bytes(), b'BUILD FIXTURE')
         self.assertFalse((self.output.parent / 'ForzaMastro5.PreGame.exe').exists())
         self.assertIn('show_pre_game=1', (self.output.parent / 'forzamastro.ini').read_text())
         self.assertFalse((self.output.parent / 'data/titles').exists())
@@ -227,6 +229,12 @@ class BuilderSafetyTests(LauncherSafetyTests):
         backend.build_game(self.root, dict(backend.DEFAULTS, show_pre_game=False), self.output, self.game)
         self.assertFalse((self.output.parent / 'ForzaMastro5.PreGame.exe').exists())
         self.assertIn('show_pre_game=0', (self.output.parent / 'forzamastro.ini').read_text())
+
+    def test_missing_native_background_refuses_pre_game_and_rolls_back(self):
+        (self.root/'runtime/pc/data/ui/fm5-background-clean.png').unlink()
+        with self.assertRaisesRegex(RuntimeError, 'background is missing'):
+            backend.build_game(self.root, backend.DEFAULTS.copy(), self.output, self.game)
+        self.assertFalse(self.output.exists())
 
     def test_language_controls_game_with_native_speech_following(self):
         backend.build_game(self.root, dict(backend.DEFAULTS, language='cs-CZ'), self.output, self.game / 'Mount')
@@ -347,6 +355,40 @@ class BuilderSafetyTests(LauncherSafetyTests):
         with self.assertRaisesRegex(RuntimeError, 'not ready'):
             backend.build_game(self.root, backend.DEFAULTS.copy(), self.output, self.game)
         self.assertFalse(self.output.exists())
+
+    def test_portable_bridge_is_hydrated_only_in_new_output(self):
+        import fm5_bridge_template
+        original_game = self.source_snapshot()
+        bridge = self.root / 'runtime/pc/ForzaMastro5Bridge.dll'
+        before = bridge.read_bytes()
+        (self.root / 'runtime/bridge-template.json').write_text('{}')
+        def hydrate(template, manifest, game_exe, host, output):
+            self.assertEqual(template, bridge)
+            self.assertEqual(game_exe, self.game / 'Mount/forza_durango_release_final.exe')
+            self.assertEqual(host, self.root / 'runtime/pc/ForzaMastro5.exe')
+            self.assertNotEqual(output.parent, bridge.parent)
+            output.write_bytes(b'HYDRATED LOCAL FIXTURE')
+        with mock.patch.object(fm5_bridge_template, 'hydrate_bridge', side_effect=hydrate) as recover:
+            result = backend.build_game(self.root, backend.DEFAULTS.copy(), self.output, self.game)
+        self.assertTrue(result['ok'])
+        recover.assert_called_once()
+        self.assertEqual((self.output.parent / bridge.name).read_bytes(), b'HYDRATED LOCAL FIXTURE')
+        self.assertEqual(bridge.read_bytes(), before)
+        self.assertEqual(self.source_snapshot(), original_game)
+
+    def test_failed_portable_recovery_leaves_no_game_or_cache_changes(self):
+        import fm5_bridge_template
+        original_game = self.source_snapshot()
+        bridge = self.root / 'runtime/pc/ForzaMastro5Bridge.dll'
+        before = bridge.read_bytes()
+        (self.root / 'runtime/bridge-template.json').write_text('{}')
+        with mock.patch.object(fm5_bridge_template, 'hydrate_bridge', side_effect=ValueError('fixture recovery failure')):
+            with self.assertRaisesRegex(ValueError, 'recovery failure'):
+                backend.build_game(self.root, backend.DEFAULTS.copy(), self.output, self.game)
+        self.assertFalse(self.output.exists())
+        self.assertFalse(list(self.output.parent.parent.glob('.forzamastro-build-*')))
+        self.assertEqual(bridge.read_bytes(), before)
+        self.assertEqual(self.source_snapshot(), original_game)
 
 
 if __name__ == '__main__':

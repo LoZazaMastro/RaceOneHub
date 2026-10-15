@@ -234,11 +234,11 @@ public sealed class LauncherModel
             option.Availability = option.Enabled ? "" : "Unavailable in this PC profile";
         }
         Status =
-                 !All.All(option => option.Enabled) ? "Runtime preparation required. See docs/BUILDING.md." :
+                 !All.All(option => option.Enabled) ? "Some settings are unavailable in this build." :
                  string.IsNullOrEmpty(GameFolder) ? "Choose your extracted " + GameTitle + " folder." :
                  !Directory.Exists(GameFolder) ? "The selected game folder is unavailable. Choose it again." :
                  backend.running ? "Close " + Path.GetFileNameWithoutExtension(OutputExecutableName) + " before building." :
-                 backend.build_ready ? "Ready to build." : "Runtime preparation required. See docs/BUILDING.md.";
+                 backend.build_ready ? "Ready to build." : "Required runtime components are unavailable.";
         if (backend.warnings.Length > 0) Status += " " + string.Join(" ", backend.warnings);
         UpdateNotes();
     }

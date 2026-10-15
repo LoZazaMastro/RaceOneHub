@@ -15,6 +15,7 @@ internal static class SelfTests
   Directory.CreateDirectory(Path.Combine(temp,"launcher","backend"));Directory.CreateDirectory(Path.Combine(temp,"runtime","pc"));
   Directory.CreateDirectory(Path.Combine(temp,"tools"));File.WriteAllText(Path.Combine(temp,"tools","pc_launcher_backend.py"),"# Fixture root marker; never executed");
   try {
+   PortablePayloadTests.Run(Check,temp);
    var model=new LauncherModel(temp);
    Check(!model.CanBuild,"Missing backend cannot launch");
    Check(model.Video.Length+model.Audio.Length==8 && model.All.Count()==9,"Eight game options plus independent builder option");
@@ -191,7 +192,7 @@ internal static class SelfTests
    Check(reloadedPreGame.Values()["show_pre_game"]=="true","Unchecking Skip re-enables pre-game");
    languageSupport.Remove("show_pre_game");var missingPreGame=new LauncherModel(languageRoot);missingPreGame.ApplyCapabilities(LanguageCaps());
    Check(!missingPreGame.CanBuild,"Missing pre-game capability blocks unsupported generation");
-   Check(missingPreGame.Status.Contains("prepared",StringComparison.Ordinal),"Missing setting capability is visibly pending");
+   Check(missingPreGame.Status.Contains("unavailable",StringComparison.OrdinalIgnoreCase),"Missing setting capability is visibly unavailable");
    var missingSource=new LauncherModel(Path.Combine(temp,"missing-source"));
    missingSource.ApplyCapabilities(Capabilities(true,false));
    try{missingSource.PrepareBuild(Path.Combine(temp,"must-not-exist.json"),missingSource.OutputFile);throw new Exception("Missing source accepted");}catch(InvalidOperationException){checks++;}

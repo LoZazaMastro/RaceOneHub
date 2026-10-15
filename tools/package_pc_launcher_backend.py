@@ -1,4 +1,4 @@
-"""Clean-package the backend and verify its embedded icon helper is current."""
+"""Clean-package the backend and verify current embedded helper modules."""
 from pathlib import Path
 import argparse
 import hashlib
@@ -38,6 +38,22 @@ def inspect_embedded_helper(executable, source):
             'embedded_matches_current_source': True, 'pefile_present': True}
 
 
+def inspect_embedded_modules(executable, sources):
+    from PyInstaller.archive.readers import CArchiveReader
+    archive = CArchiveReader(str(executable)).open_embedded_archive('PYZ.pyz')
+    result = {}
+    for name, source in sources.items():
+        if name not in archive.toc:
+            raise RuntimeError('Required runtime helper is missing from the frozen backend: ' + name)
+        actual = code_fingerprint(archive.extract(name))
+        expected = code_fingerprint(compile(source.read_bytes(), name+'.py', 'exec'))
+        if actual != expected:
+            raise RuntimeError('Frozen helper does not match current source: ' + name)
+        result[name] = {'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
+                        'code_fingerprint': actual, 'embedded_matches_current_source': True}
+    return result
+
+
 def main():
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
@@ -56,13 +72,16 @@ def main():
         '--name', 'ForzaMastro5Backend', '--distpath', str(args.output_dir.resolve()),
         '--workpath', str(work), '--specpath', str(work),
         '--paths', str(root/'tools'), '--paths', str(root/'tools/python-libs'),
-        '--hidden-import', 'pefile',
+        '--hidden-import', 'pefile', '--hidden-import', 'fm5_bridge_template',
+        '--hidden-import', 'generate_fm5_includes',
         '--add-data', str(root/'tools/fm5_create_shortcut.ps1') + os.pathsep + '.',
         str(root/'tools/pc_launcher_backend.py')]
     subprocess.run(command, cwd=root, env=environment, check=True)
     sys.path.insert(0, str(root/'tools/packaging-libs'))
     executable = args.output_dir.resolve()/'ForzaMastro5Backend.exe'
     report = inspect_embedded_helper(executable, root/'tools/pc_icon_resources.py')
+    report['runtime_helpers'] = inspect_embedded_modules(executable, {
+        name:root/'tools'/(name+'.py') for name in ['fm5_bridge_template','generate_fm5_includes']})
     report.update(executable=str(executable), executable_sha256=hashlib.sha256(executable.read_bytes()).hexdigest())
     (work/'embedded-source-verification.json').write_text(json.dumps(report, indent=2)+'\n')
     print(json.dumps(report, indent=2))
