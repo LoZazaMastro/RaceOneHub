@@ -1,0 +1,24 @@
+Race One Hub - Designed by LoZazaMastro
+
+The WPF theme and layout are adapted from The Simpsons Game PS5 Builder,
+by LoZazaMastro and contributors, supplied by its author under GPL-3.0.
+Adapted source and the complete GPL-3.0 license accompany this source release.
+Changes include the authored orange/white/black theme, FM5 builder workflow,
+typed backend protocol, input/output selection, and authored numeric/tyre icons.
+No font file or game artwork is included.
+
+Azimuth: https://almost-there-games.itch.io/azimuth
+Creator: Almost There Games, https://almost-there-games.itch.io/
+The compatibility adapters target this separately supplied external engine.
+Original/adapted engine binaries, its audio/CRT/TLS dependencies and SDK XG
+libraries are not included. Their own notices and terms remain applicable.
+This project's GPL license does not relicense those external inputs.
+
+Research/API references:
+WinDurango: https://github.com/WinDurango/WinDurango
+XWine1: https://github.com/xwine1
+These credit references, not bundled or claimed linked dependencies.
+
+Forza Motorsport 5 is by Turn 10 Studios / Microsoft Studios.
+All trademarks and game content belong to their respective owners.
+This independent project is not affiliated with Microsoft, Xbox or Turn 10.

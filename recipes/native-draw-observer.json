@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "name": "post-graphics-preparation-draw-observer",
+  "original_sha256": "579ed8d8b0b16cbf7890380cb7b925c972b837631ede367eada55eae4afc39bc",
+  "original_bytes": 3475968,
+  "image_base": "0x140000000",
+  "callee": {
+    "rva": "0x12a6d0",
+    "guard": "48895c24205556574154415541564157488d6c24d94881eca0000000488b054d",
+    "prototype": "void* WINAPI NativePrepareGraphics(void* context, BYTE indexed, void* opaque)",
+    "parameters": {
+      "RCX": "NativeContext*",
+      "DL": "Indexed flag byte. DirectDraw/DrawInstanced0, indexed variants1, indirect obtains caller flag; upper RDX bits are not semantic input.",
+      "R8": "Opaque preparation/ownership pointer preserved from caller stack; do not dereference or reinterpret."
+    },
+    "return": "Exact native command-context/list pointer inRAX, nullable; notBOOL and notHRESULT."
+  },
+  "callsites": [
+    {
+      "rva": "0x12b8a7",
+      "caller_rva": "0x12b880",
+      "kind": "Draw",
+      "indexed_flag": 0,
+      "original_call": "e824eeffff",
+      "callee_rva": "0x12a6d0",
+      "preceding_rva": "0x12b8a5",
+      "preceding_guard": "33d2e824eeffff",
+      "following_rva": "0x12b8ac",
+      "following_guard": "4885c0750f488bcb4883c450",
+      "caller_prologue_guard": "405356574883ec50418bf1418bf8488bd94c8b8424900000004885d274074889",
+      "replacement": "5-byte relativeCALL to ordinary compiled typed wrapper; original caller branch and stack unchanged."
+    },
+    {
+      "rva": "0x12b96e",
+      "caller_rva": "0x12b940",
+      "kind": "DrawIndexed",
+      "indexed_flag": 1,
+      "original_call": "e85dedffff",
+      "callee_rva": "0x12a6d0",
+      "preceding_rva": "0x12b96c",
+      "preceding_guard": "b201e85dedffff",
+      "following_rva": "0x12b973",
+      "following_guard": "4885c07517488bcb488b5c24",
+      "caller_prologue_guard": "48895c24104889742420574883ec50418bf1498bf8488bd94c8b842480000000",
+      "replacement": "5-byte relativeCALL to ordinary compiled typed wrapper; original caller branch and stack unchanged."
+    },
+    {
+      "rva": "0x12ba47",
+      "caller_rva": "0x12ba20",
+      "kind": "DrawInstanced",
+      "indexed_flag": 0,
+      "original_call": "e884ecffff",
+      "callee_rva": "0x12a6d0",
+      "preceding_rva": "0x12ba45",
+      "preceding_guard": "33d2e884ecffff",
+      "following_rva": "0x12ba4c",
+      "following_guard": "488bc84885c0750f488bcb48",
+      "caller_prologue_guard": "405356574883ec50498bf9418bf0488bd94c8b8424980000004885d274074889",
+      "replacement": "5-byte relativeCALL to ordinary compiled typed wrapper; original caller branch and stack unchanged."
+    },
+    {
+      "rva": "0x12bb0e",
+      "caller_rva": "0x12bae0",
+      "kind": "DrawIndexedInstanced",
+      "indexed_flag": 1,
+      "original_call": "e8bdebffff",
+      "callee_rva": "0x12a6d0",
+      "preceding_rva": "0x12bb0c",
+      "preceding_guard": "b201e8bdebffff",
+      "following_rva": "0x12bb13",
+      "following_guard": "488bc84885c07517488bcb48",
+      "caller_prologue_guard": "48895c24104889742420574883ec50498bf9498bf0488bd94c8b842488000000",
+      "replacement": "5-byte relativeCALL to ordinary compiled typed wrapper; original caller branch and stack unchanged."
+    },
+    {
+      "rva": "0x12bbfe",
+      "caller_rva": "0x12bbc0",
+      "kind": "DrawIndirectBackend",
+      "indexed_flag": "caller-provided",
+      "original_call": "e8cdeaffff",
+      "callee_rva": "0x12a6d0",
+      "preceding_rva": "0x12bbf4",
+      "preceding_guard": "4c8bc6400fb6d7488bcbe8cdeaffff",
+      "following_rva": "0x12bc03",
+      "following_guard": "4c8bc04885c0750f488bcb48",
+      "caller_prologue_guard": "405356574883ec60488bd90fb6bc24a0000000488bb424a80000004885d27407",
+      "replacement": "5-byte relativeCALL to ordinary compiled typed wrapper; original caller branch and stack unchanged."
+    }
+  ],
+  "shim_contract": {
+    "delegate": "Call the guarded original callee EXACTLY ONCE with unchanged three typed arguments.",
+    "observe": "Only after original returns nonNULL, collect bounded read-only state from the same native context, then return the exact original pointer.",
+    "failure": "If original returnsNULL, preserveNULL and skip observer. Do not issue a draw or bypass caller failure branch.",
+    "state": "Native12a6d0 has already selected pipeline, prepared resources and refreshed CBV/SRV descriptors before returning; the callers have not yet called edf00 to record draw.",
+    "thread": "Called from native draw backend; no public immediate-frontend lock/flush/wait or state-changingAPI. Worker-thread ownership itself must be verified from native context/device/thread metadata before assuming arbitrary context is stable.",
+    "side_effects": "No GPUwait,Flush,ClearState,state restoration/reset or timing/deadline changes.",
+    "abi": "Normal compiled Win64 wrapper must preserve all nonvolatile registers, stack alignment/shadow space and unwind metadata; preserve native return pointer. Internal observer errors cannot replace a successful native return. Preserve original GetLastError across observation.",
+    "integration": "Root owns guarded host builder hook/import/stub. No shared build script was changed by this recipe."
+  },
+  "validation_scope": "File-only SHA/PE/x64CALL decoding and mutation rejection. No executable/DLL loaded and no game/GUI/GPU device created."
+}

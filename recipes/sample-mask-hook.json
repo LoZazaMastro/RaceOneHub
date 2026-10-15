@@ -1,0 +1,19 @@
+{
+  "rva": "0x130a77",
+  "bytes": 93,
+  "original": "413bc27458458b98c00100008bc841b9ffffffff41d3e14523cb458bc74585d274340f1f8000000000418bd3418bc8d3eaf6c201741883f804730f83f8027507f7d183e101eb03418bcf410fabc941ffc0453bc272d344898d60010000",
+  "export": "FM5MapNativeSampleMask",
+  "signature": "UINT WINAPI(UINT effectiveCount,UINT originalCount,UINT originalQuality,UINT originalSampleMask)",
+  "stub_prefix": "458b88c00100004489d289c1458b806c020000",
+  "stub_instructions": [
+    "MOV R9D,[R8+1c0] originalMask (before overwritingR8)",
+    "MOV EDX,R10D originalCount",
+    "MOV ECX,EAX effectiveCount",
+    "MOV R8D,[R8+26c] originalQuality"
+  ],
+  "stub_then": "TailJMP importedbridgeexport, retainingnativecallerreturn",
+  "patch_block": "E8 rel32 callhoststub +898560010000 (MOV[rbp+160],EAX) +NOPpad to93bytes; returnthroughNOPto130ad4",
+  "atomic_guard": "Validate entire93B original block plusall6normalizer before anypatch",
+  "live_path": "1322b0 storesoriginalmask state+48 into desc+1c0 at13251d; originalCount/Quality resource+58 into desc+268 at13275d. LivePSOdescriptor passes common130990 before1363a0 /CreateGraphicsPSO1364bf; samecommonmapper asserializedwarmup. No secondmaskrewriteatlivebuilder.",
+  "policy": "See fm5_msaa4.c; exactnativefallback unlessactiveforced4; coverage4 masks preserved; coverage2 inverse standard2?4 grouping; highercoverageonlyall/none supported."
+}

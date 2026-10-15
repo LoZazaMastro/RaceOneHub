@@ -1,0 +1,674 @@
+{
+  "original_sha256": "579ed8d8b0b16cbf7890380cb7b925c972b837631ede367eada55eae4afc39bc",
+  "literals": [
+    {
+      "rva": "0x29a140",
+      "encoding": "utf-16le",
+      "old": "Azimuth",
+      "new": "RaceOneEngine",
+      "references": [
+        {
+          "rva": "0x2f0f1",
+          "target": "0x29a140",
+          "text": "lea r8, [rip + 0x26b048]",
+          "bytes": "4c8d0548b02600",
+          "disp_offset": 3,
+          "disp_size": 4
+        },
+        {
+          "rva": "0x6d31c",
+          "target": "0x29a140",
+          "text": "lea r8, [rip + 0x22ce1d]",
+          "bytes": "4c8d051dce2200",
+          "disp_offset": 3,
+          "disp_size": 4
+        },
+        {
+          "rva": "0x24ce58",
+          "target": "0x29a140",
+          "text": "lea r8, [rip + 0x4d2e1]",
+          "bytes": "4c8d05e1d20400",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x29a1d8",
+      "encoding": "utf-16le",
+      "old": "azimuth.pipelines",
+      "new": "RaceOneEngine.pipelines",
+      "references": [
+        {
+          "rva": "0x5914",
+          "target": "0x29a1d8",
+          "text": "lea rdx, [rip + 0x2948bd]",
+          "bytes": "488d15bd482900",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x29ae00",
+      "encoding": "utf-16le",
+      "old": "Azimuth game folder check",
+      "new": "RaceOneEngine game folder check",
+      "references": [
+        {
+          "rva": "0x2a0a9",
+          "target": "0x29ae00",
+          "text": "lea rdx, [rip + 0x270d50]",
+          "bytes": "488d15500d2700",
+          "disp_offset": 3,
+          "disp_size": 4
+        },
+        {
+          "rva": "0x2a1d9",
+          "target": "0x29ae00",
+          "text": "lea rdx, [rip + 0x270c20]",
+          "bytes": "488d15200c2700",
+          "disp_offset": 3,
+          "disp_size": 4
+        },
+        {
+          "rva": "0x2a359",
+          "target": "0x29ae00",
+          "text": "lea rdx, [rip + 0x270aa0]",
+          "bytes": "488d15a00a2700",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x29b5b0",
+      "encoding": "utf-16le",
+      "old": "Azimuth folder dialog",
+      "new": "RaceOneEngine folder dialog",
+      "references": [
+        {
+          "rva": "0x2b3b6",
+          "target": "0x29b5b0",
+          "text": "lea rdx, [rip + 0x2701f3]",
+          "bytes": "488d15f3012700",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x29b888",
+      "encoding": "ascii",
+      "old": "azimuth+0x%llx",
+      "new": "RaceOneEngine+0x%llx",
+      "references": [
+        {
+          "rva": "0x2c761",
+          "target": "0x29b888",
+          "text": "lea rdx, [rip + 0x26f120]",
+          "bytes": "488d1520f12600",
+          "disp_offset": 3,
+          "disp_size": 4
+        },
+        {
+          "rva": "0x2c921",
+          "target": "0x29b888",
+          "text": "lea rdx, [rip + 0x26ef60]",
+          "bytes": "488d1560ef2600",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x29ba40",
+      "encoding": "ascii",
+      "old": "Azimuth stopped: ",
+      "new": "RaceOneEngine stopped: ",
+      "references": [
+        {
+          "rva": "0x2e93c",
+          "target": "0x29ba40",
+          "text": "lea r8, [rip + 0x26d0fd]",
+          "bytes": "4c8d05fdd02600",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x29ba68",
+      "encoding": "ascii",
+      "old": "Azimuth end",
+      "new": "RaceOneEngine end",
+      "references": [
+        {
+          "rva": "0x2f317",
+          "target": "0x29ba68",
+          "text": "lea rcx, [rip + 0x26c74a]",
+          "bytes": "488d0d4ac72600",
+          "disp_offset": 3,
+          "disp_size": 4
+        },
+        {
+          "rva": "0x2f45d",
+          "target": "0x29ba68",
+          "text": "lea rcx, [rip + 0x26c604]",
+          "bytes": "488d0d04c62600",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x29bbd0",
+      "encoding": "utf-16le",
+      "old": "Azimuth end",
+      "new": "RaceOneEngine end",
+      "references": [
+        {
+          "rva": "0x30c92",
+          "target": "0x29bbd0",
+          "text": "lea rdx, [rip + 0x26af37]",
+          "bytes": "488d1537af2600",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x29f178",
+      "encoding": "utf-16le",
+      "old": "Azimuth preparation",
+      "new": "RaceOneEngine preparation",
+      "references": [
+        {
+          "rva": "0x57bf7",
+          "target": "0x29f178",
+          "text": "lea rdx, [rip + 0x24757a]",
+          "bytes": "488d157a752400",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2a0308",
+      "encoding": "utf-16le",
+      "old": "Azimuth.Game.Win32",
+      "new": "RaceOneEngine.Game.Win32",
+      "references": [
+        {
+          "rva": "0x6d4c9",
+          "target": "0x2a0308",
+          "text": "lea rax, [rip + 0x232e38]",
+          "bytes": "488d05382e2300",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2a0a88",
+      "encoding": "utf-16le",
+      "old": "Azimuth.Game.Win32",
+      "new": "RaceOneEngine.Game.Win32",
+      "references": [
+        {
+          "rva": "0x6d326",
+          "target": "0x2a0a88",
+          "text": "lea rdx, [rip + 0x23375b]",
+          "bytes": "488d155b372300",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2a1248",
+      "encoding": "utf-16le",
+      "old": "azimuth.log",
+      "new": "RaceOneEngine.log",
+      "references": [
+        {
+          "rva": "0x76d7e",
+          "target": "0x2a1248",
+          "text": "lea rdx, [rip + 0x22a4c3]",
+          "bytes": "488d15c3a42200",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2a1260",
+      "encoding": "ascii",
+      "old": ": Azimuth ",
+      "new": ": RaceOneEngine ",
+      "references": [
+        {
+          "rva": "0x770f2",
+          "target": "0x2a1260",
+          "text": "lea rdx, [rip + 0x22a167]",
+          "bytes": "488d1567a12200",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2a1510",
+      "encoding": "utf-16le",
+      "old": "azimuth.ini",
+      "new": "RaceOneEngine.ini",
+      "references": [
+        {
+          "rva": "0x7bfc4",
+          "target": "0x2a1510",
+          "text": "lea rdx, [rip + 0x225545]",
+          "bytes": "488d1545552200",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2a1b10",
+      "encoding": "ascii",
+      "old": "Azimuth's data folder is missing or incomplete; reinstall Azimuth",
+      "new": "RaceOneEngine's data folder is missing or incomplete; reinstall RaceOneEngine",
+      "references": [
+        {
+          "rva": "0x823fc",
+          "target": "0x2a1b10",
+          "text": "lea rdx, [rip + 0x21f70d]",
+          "bytes": "488d150df72100",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2a1c20",
+      "encoding": "ascii",
+      "old": " folder beside azimuth.exe is missing: ./ops/lab deploy makes it",
+      "new": " folder beside the game executable is missing; rebuild this game bundle",
+      "references": [
+        {
+          "rva": "0x8239f",
+          "target": "0x2a1c20",
+          "text": "lea r8, [rip + 0x21f87a]",
+          "bytes": "4c8d057af82100",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2a5c08",
+      "encoding": "utf-16le",
+      "old": "Azimuth.Calibration.Win32",
+      "new": "RaceOneEngine.Calibration.Win32",
+      "references": [
+        {
+          "rva": "0x91b1e",
+          "target": "0x2a5c08",
+          "text": "lea rax, [rip + 0x2140e3]",
+          "bytes": "488d05e3402100",
+          "disp_offset": 3,
+          "disp_size": 4
+        },
+        {
+          "rva": "0x91c23",
+          "target": "0x2a5c08",
+          "text": "lea rdx, [rip + 0x213fde]",
+          "bytes": "488d15de3f2100",
+          "disp_offset": 3,
+          "disp_size": 4
+        },
+        {
+          "rva": "0x92b4d",
+          "target": "0x2a5c08",
+          "text": "lea rcx, [rip + 0x2130b4]",
+          "bytes": "488d0db4302100",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2a60f8",
+      "encoding": "ascii",
+      "old": "Only one Azimuth session is supported per process",
+      "new": "Only one RaceOneEngine session is supported per process",
+      "references": [
+        {
+          "rva": "0x77685",
+          "target": "0x2a60f8",
+          "text": "lea rdx, [rip + 0x22ea6c]",
+          "bytes": "488d156cea2200",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2a7788",
+      "encoding": "utf-16le",
+      "old": "Azimuth audio processor",
+      "new": "RaceOneEngine audio processor",
+      "references": [
+        {
+          "rva": "0xb05a4",
+          "target": "0x2a7788",
+          "text": "lea rdx, [rip + 0x1f71dd]",
+          "bytes": "488d15dd711f00",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2acee8",
+      "encoding": "utf-16le",
+      "old": "Azimuth reaper",
+      "new": "RaceOneEngine reaper",
+      "references": [
+        {
+          "rva": "0xd9fe8",
+          "target": "0x2acee8",
+          "text": "lea rdx, [rip + 0x1d2ef9]",
+          "bytes": "488d15f92e1d00",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2ae920",
+      "encoding": "utf-16le",
+      "old": "Azimuth worker",
+      "new": "RaceOneEngine worker",
+      "references": [
+        {
+          "rva": "0xef187",
+          "target": "0x2ae920",
+          "text": "lea rdx, [rip + 0x1bf792]",
+          "bytes": "488d1592f71b00",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2aeb38",
+      "encoding": "utf-16le",
+      "old": "Azimuth queue",
+      "new": "RaceOneEngine queue",
+      "references": [
+        {
+          "rva": "0xf1ab9",
+          "target": "0x2aeb38",
+          "text": "lea rdx, [rip + 0x1bd078]",
+          "bytes": "488d1578d01b00",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2aeb78",
+      "encoding": "utf-16le",
+      "old": "Azimuth completion",
+      "new": "RaceOneEngine completion",
+      "references": [
+        {
+          "rva": "0xf30f0",
+          "target": "0x2aeb78",
+          "text": "lea rdx, [rip + 0x1bba81]",
+          "bytes": "488d1581ba1b00",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2b05b8",
+      "encoding": "utf-16le",
+      "old": "azimuth recording ",
+      "new": "RaceOneEngine recording ",
+      "references": [
+        {
+          "rva": "0x12501c",
+          "target": "0x2b05b8",
+          "text": "lea r8, [rip + 0x18b595]",
+          "bytes": "4c8d0595b51800",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2b3aa0",
+      "encoding": "ascii",
+      "old": " characters, which may be more than Windows takes: a shorter path to the Azimuth folder would help",
+      "new": " characters, which may be more than Windows takes: a shorter path to the RaceOneEngine folder would help",
+      "references": [
+        {
+          "rva": "0x16baea",
+          "target": "0x2b3aa0",
+          "text": "lea rdx, [rip + 0x147faf]",
+          "bytes": "488d15af7f1400",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2b3d40",
+      "encoding": "ascii",
+      "old": ", which Azimuth leaves as it is from now on",
+      "new": ", which RaceOneEngine leaves as it is from now on",
+      "references": [
+        {
+          "rva": "0x16e9f5",
+          "target": "0x2b3d40",
+          "text": "lea rdx, [rip + 0x145344]",
+          "bytes": "488d1544531400",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2b3d70",
+      "encoding": "ascii",
+      "old": "Azimuth now keeps each game's saves in a folder of that game's own, and could not move the saves there: ",
+      "new": "RaceOneEngine now keeps each game's saves in a folder of that game's own, and could not move the saves there: ",
+      "references": [
+        {
+          "rva": "0x2618a1",
+          "target": "0x2b3d70",
+          "text": "lea rdx, [rip + 0x524c8]",
+          "bytes": "488d15c8240500",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2b3e20",
+      "encoding": "ascii",
+      "old": ". The game was not started, since it would have begun without them. Start Azimuth again once that is put right: if another program has that folder open (a backup tool, a file manager), close it first, and check that the disk has room.",
+      "new": ". The game was not started, since it would have begun without them. Start RaceOneEngine again once that is put right: if another program has that folder open (a backup tool, a file manager), close it first, and check that the disk has room.",
+      "references": [
+        {
+          "rva": "0x2618f6",
+          "target": "0x2b3e20",
+          "text": "lea r8, [rip + 0x52523]",
+          "bytes": "4c8d0523250500",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2b4080",
+      "encoding": "ascii",
+      "old": "Azimuth keeps each game's saves and temporary files in a folder of that game's own in ",
+      "new": "RaceOneEngine keeps each game's saves and temporary files in a folder of that game's own in ",
+      "references": [
+        {
+          "rva": "0x261de2",
+          "target": "0x2b4080",
+          "text": "lea rdx, [rip + 0x52297]",
+          "bytes": "488d1597220500",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2b45c0",
+      "encoding": "ascii",
+      "old": "the save an earlier Azimuth made could not be renamed for this one (error ",
+      "new": "the save an earlier RaceOneEngine made could not be renamed for this one (error ",
+      "references": [
+        {
+          "rva": "0x172f0b",
+          "target": "0x2b45c0",
+          "text": "lea rdx, [rip + 0x1416ae]",
+          "bytes": "488d15ae161400",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2b4a50",
+      "encoding": "utf-16le",
+      "old": "Azimuth saves",
+      "new": "RaceOneEngine saves",
+      "references": [
+        {
+          "rva": "0x17a1e6",
+          "target": "0x2b4a50",
+          "text": "lea rdx, [rip + 0x13a863]",
+          "bytes": "488d1563a81300",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2b7da0",
+      "encoding": "utf-16le",
+      "old": "Azimuth DMA engine",
+      "new": "RaceOneEngine DMA engine",
+      "references": [
+        {
+          "rva": "0x195b08",
+          "target": "0x2b7da0",
+          "text": "lea rdx, [rip + 0x122291]",
+          "bytes": "488d1591221200",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2b82d0",
+      "encoding": "utf-16le",
+      "old": "Azimuth sweep restart",
+      "new": "RaceOneEngine sweep restart",
+      "references": [
+        {
+          "rva": "0x19d5d2",
+          "target": "0x2b82d0",
+          "text": "lea rdx, [rip + 0x11acf7]",
+          "bytes": "488d15f7ac1100",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2b86f0",
+      "encoding": "utf-16le",
+      "old": "Azimuth pipelines",
+      "new": "RaceOneEngine pipelines",
+      "references": [
+        {
+          "rva": "0x1a4099",
+          "target": "0x2b86f0",
+          "text": "lea rdx, [rip + 0x114650]",
+          "bytes": "488d1550461100",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    },
+    {
+      "rva": "0x2b9b68",
+      "encoding": "utf-16le",
+      "old": "Azimuth work pool",
+      "new": "RaceOneEngine work pool",
+      "references": [
+        {
+          "rva": "0x1d59bd",
+          "target": "0x2b9b68",
+          "text": "lea rdx, [rip + 0xe41a4]",
+          "bytes": "488d15a4410e00",
+          "disp_offset": 3,
+          "disp_size": 4
+        }
+      ]
+    }
+  ],
+  "lengths": [
+    {
+      "rva": "0x2e936",
+      "before": "41b911000000",
+      "after": "41b917000000"
+    },
+    {
+      "rva": "0x76d78",
+      "before": "41b80b000000",
+      "after": "41b811000000"
+    },
+    {
+      "rva": "0x770ec",
+      "before": "41b80a000000",
+      "after": "41b810000000"
+    },
+    {
+      "rva": "0x7bfbe",
+      "before": "41b80b000000",
+      "after": "41b811000000"
+    },
+    {
+      "rva": "0x125016",
+      "before": "41b912000000",
+      "after": "41b918000000"
+    },
+    {
+      "rva": "0x16bae4",
+      "before": "41b862000000",
+      "after": "41b868000000"
+    },
+    {
+      "rva": "0x16e9ef",
+      "before": "41b82b000000",
+      "after": "41b831000000"
+    }
+  ],
+  "in_place": [
+    {
+      "rva": "0x2b4610",
+      "before": "6c6f63616c20736176652073706163653a20746865207361766520616e206561726c69657220417a696d757468206d6164652069732072656e616d656420666f722074686520706c617965722773206964206f662074686973206f6e6500",
+      "after": "6c6f63616c20736176652073706163653a20746865207361766520616e206561726c6965722072756e74696d65206d6164652069732072656e616d656420666f722074686520706c617965722773206964206f662074686973206f6e6500",
+      "purpose": "Same-length generic wording preserves the compiler-inlined 93-byte copy and its allocation metadata."
+    }
+  ]
+}

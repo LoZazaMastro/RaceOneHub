@@ -1,0 +1,56 @@
+{
+  "immutable_Az_sha256": "579ed8d8b0b16cbf7890380cb7b925c972b837631ede367eada55eae4afc39bc",
+  "patches": [
+    {
+      "rva": "0xe752a",
+      "original": "7418",
+      "replacement": "9090",
+      "before_guard_rva": "0xe7524",
+      "before_guard": "01741d83f804741833db48b900000000",
+      "purpose": "resource sample normalization"
+    },
+    {
+      "rva": "0xe7551",
+      "original": "0f84eb000000",
+      "replacement": "909090909090",
+      "before_guard_rva": "0xe754b",
+      "before_guard": "19230083fe040f84eb00000083fb010f84e20000",
+      "purpose": "resource format/sample capability query"
+    },
+    {
+      "rva": "0x130a4e",
+      "original": "7419",
+      "replacement": "9090",
+      "before_guard_rva": "0x130a48",
+      "before_guard": "01741e83f9047419498bc748ba000000",
+      "purpose": "serialized/warmupPSO SampleDesc"
+    },
+    {
+      "rva": "0x132310",
+      "original": "7418",
+      "replacement": "9090",
+      "before_guard_rva": "0x13230a",
+      "before_guard": "01741d83f904741883f9018bc348ba00",
+      "purpose": "livePSO SampleDesc+shaderselection"
+    },
+    {
+      "rva": "0x1a7e60",
+      "original": "7418",
+      "replacement": "9090",
+      "before_guard_rva": "0x1a7e5a",
+      "before_guard": "01741d83f804741833c948ba00000000",
+      "purpose": "ResolveSubresource effectiveSampleDesc"
+    },
+    {
+      "rva": "0x1ab026",
+      "original": "7418",
+      "replacement": "9090",
+      "before_guard_rva": "0x1ab020",
+      "before_guard": "01741d83f804741833db48b900000000",
+      "purpose": "clear effectiveSampleDesc"
+    }
+  ],
+  "activation": "Changes behavior ONLYglobal318ea0==4; Count1-pass branchesretained. Otherglobal1/2 path alreadybypasses thesesentinelJE. Allsixoriginalguards beforeallmutations.",
+  "required_bridge_source": "src/allocation-port/fm5_msaa4.c",
+  "no_compiler_JAE_changes": true
+}

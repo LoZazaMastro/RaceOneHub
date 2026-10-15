@@ -1,0 +1,37 @@
+{
+  "source_sha256": "579ed8d8b0b16cbf7890380cb7b925c972b837631ede367eada55eae4afc39bc",
+  "fm5_only": true,
+  "patches": [
+    {
+      "rva": 779998,
+      "file_offset": 776926,
+      "before_hex": "50010000",
+      "after_hex": "28000000",
+      "reason": "Require exact FM5 forty-byte TLS template"
+    },
+    {
+      "rva": 780021,
+      "file_offset": 776949,
+      "before_hex": "00005000",
+      "after_hex": "00004000",
+      "reason": "Require exact FM5 PE TLS alignment8"
+    },
+    {
+      "rva": 780048,
+      "file_offset": 776976,
+      "before_hex": "50010000",
+      "after_hex": "28000000",
+      "reason": "Validate precisely all forty FM5 TLS template bytes"
+    }
+  ],
+  "unchanged": [
+    "TLS callback emptiness guard",
+    "zero-fill guard",
+    "template zero check",
+    "image bounds check",
+    "helper native module initialization guard",
+    "helper export validation",
+    "Windows static TLS allocation"
+  ],
+  "precondition": "Exact supplied FM5 build, no TLS callbacks, official 336-byte zero helper retained"
+}

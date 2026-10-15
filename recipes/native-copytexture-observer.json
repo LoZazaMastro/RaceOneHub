@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "name": "native-CopyTextureRegion-observer",
+  "original_sha256": "579ed8d8b0b16cbf7890380cb7b925c972b837631ede367eada55eae4afc39bc",
+  "original_bytes": 3475968,
+  "interface": "ID3D12GraphicsCommandList::CopyTextureRegion vtable slot16, byteoffset0x80",
+  "prototype": "void WINAPI CopyTextureRegion(void* commandList, const D3D12_TEXTURE_COPY_LOCATION* destination, UINT destinationX, UINT destinationY, UINT destinationZ, const D3D12_TEXTURE_COPY_LOCATION* source, const D3D12_BOX* sourceBox)",
+  "total_arguments_including_this": 7,
+  "abi_entry": {
+    "RCX": "actual ID3D12GraphicsCommandList*",
+    "RDX": "destination copy location pointer (48-byte Win64 structure)",
+    "R8D": "destinationX (UINT)",
+    "R9D": "destinationY (UINT)",
+    "RSP+0x28": "destinationZ (UINT)",
+    "RSP+0x30": "source copy location pointer (48-byte Win64 structure)",
+    "RSP+0x38": "sourceBox pointer, nullable (24-byte Win64 structure)",
+    "return": "void; never interpret or translate asHRESULT"
+  },
+  "hooks": [
+    {
+      "rva": "0xee44a",
+      "original_load": "4c8b9080000000",
+      "replacement_opcode": "4c8d15 + signedrel32 to root-owned JMP[IAT] stub",
+      "replacement_size": 7,
+      "dispatch": "direct-tail-dispatch",
+      "guard_rva": "0xee420",
+      "guard": "40534881ec60010000488b9c24980100004c8bd1488b8c24a00100004d8b1a4d85db7418498b03498bcb4c8b90800000004881c4600100005b49ffe2",
+      "preserved_dispatch_rva": "0xee459",
+      "preserved_dispatch": "49ffe2",
+      "stack_proof": "entrypush8+sub0x160 gives0x168 delta; [current+190,198,1a0] equal originalentry+28,+30,+38. Epilogue restoresoriginalstackbeforeJMPR10."
+    },
+    {
+      "rva": "0xeeabc",
+      "original_load": "4c8b9080000000",
+      "replacement_opcode": "4c8d15 + signedrel32 to root-owned JMP[IAT] stub",
+      "replacement_size": 7,
+      "dispatch": "encoded-replay-dispatch",
+      "guard_rva": "0xeeaa9",
+      "guard": "498d537041396b6c480f44d5498d4b30488b034c8b9080000000488954243048894c2428418b436889442420458b4b64458b4360498bd3488bcb41ffd2e9d9000000",
+      "preserved_dispatch_rva": "0xeeae3",
+      "preserved_dispatch": "41ffd2",
+      "stack_proof": "BeforeCALL: stack+20Z,+28src,+30box. CALLreturnaddress makes wrapperentry+28,+30,+38. RDX=packet, src=packet+30,XYZ=DWORD+60/+64/+68, optionalbox=packet+70 iffDWORD+6c!=0; EBP=0 proved in replayprologueee6ad."
+    }
+  ],
+  "readback_contract": {
+    "genuine_delegate": "Retrieve original actual commandList vtable[16], forward all7 arguments unchanged exactlyonce. The vtable itself remains untouched, so calling it does not recurse into this callsite hook.",
+    "capture": "Match diagnostic-owned readback destination resource, record exact actual COMcommandList and own jobidentity onlyafter genuine copy recording. Do not mistake Az wrapper/encoded packet pointer for actual COMlist.",
+    "submission": "Match that list in actual ExecuteCommandLists array; invoke FM5ReadbackSubmitted(queue,count,lists) AFTER genuine ExecuteCommandLists, outside queue-history lock. Never signal private fence before real submission.",
+    "fence": "Diagnostic private fence only, signal on exactmatchedqueue aftersubmission; boundedpoll GetCompletedValue. Do not reuse/change Az game fence or wait indefinitely. No outputvalidbeforefencecompletion.",
+    "lifetime": "Own readback resource/fence/queue references until completed/failed boundedjob. Exactlistmatching must be onejob armedafterrecording; rejectduplicate list entries and crossqueue ambiguity. No persistent stale rawlist job acrossreset/reuse.",
+    "normal_path": "All ordinary copies keep identical arguments and recording order. No commandlist Close/Execute/Reset on behalf of the game and no native barrier replacement."
+  },
+  "sdk_reference": "WindowsSDK10.0.26100.0 um/d3d12.h virtualCopyTextureRegion and ID3D12GraphicsCommandList_CopyTextureRegion macro",
+  "validation_scope": "File-only originalSHA/guards and replacement instruction encoding. No game/GUI/GPUexecution or runtime changes."
+}

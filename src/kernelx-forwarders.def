@@ -1,0 +1,13 @@
+LIBRARY kernelx
+EXPORTS
+    GetCurrentProcess=KERNEL32.GetCurrentProcess
+    SetUnhandledExceptionFilter=KERNEL32.SetUnhandledExceptionFilter
+    UnhandledExceptionFilter=KERNEL32.UnhandledExceptionFilter
+    GetTickCount=KERNEL32.GetTickCount
+    GetSystemTimeAsFileTime=KERNEL32.GetSystemTimeAsFileTime
+    GetCurrentThreadId=KERNEL32.GetCurrentThreadId
+    GetCurrentProcessId=KERNEL32.GetCurrentProcessId
+    QueryPerformanceCounter=KERNEL32.QueryPerformanceCounter
+    Sleep=KERNEL32.Sleep
+    OutputDebugStringA=KERNEL32.OutputDebugStringA
+    TerminateProcess=KERNEL32.TerminateProcess

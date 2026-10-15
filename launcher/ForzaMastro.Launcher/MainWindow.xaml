@@ -1,0 +1,83 @@
+<Window x:Class="ForzaMastro.Launcher.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
+ Title="Race One Hub" Icon="Assets/Builder.png" Width="1120" Height="900" MinWidth="920" MinHeight="760" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="#131416" Foreground="{StaticResource TextPrimary}" FontFamily="Segoe UI" FontSize="14" UseLayoutRounding="True">
+ <shell:WindowChrome.WindowChrome><shell:WindowChrome CaptionHeight="42" ResizeBorderThickness="7" GlassFrameThickness="0" CornerRadius="10" UseAeroCaptionButtons="False"/></shell:WindowChrome.WindowChrome>
+ <Window.Resources>
+  <Style x:Key="GameTab" TargetType="RadioButton">
+   <Setter Property="Foreground" Value="#969CA6"/><Setter Property="FontSize" Value="13"/><Setter Property="FontWeight" Value="SemiBold"/>
+   <Setter Property="Template"><Setter.Value><ControlTemplate TargetType="RadioButton"><Border x:Name="TabBorder" BorderBrush="Transparent" BorderThickness="0,0,0,3" Padding="8,16,20,12" Background="Transparent"><ContentPresenter/></Border><ControlTemplate.Triggers><Trigger Property="IsChecked" Value="True"><Setter Property="Foreground" Value="{DynamicResource Accent}"/><Setter TargetName="TabBorder" Property="BorderBrush" Value="{DynamicResource Accent}"/></Trigger><Trigger Property="IsMouseOver" Value="True"><Setter Property="Foreground" Value="#FFFFFF"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter>
+  </Style>
+  <DataTemplate x:Key="OptionTemplate">
+   <Border Padding="0,12">
+    <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="310"/></Grid.ColumnDefinitions>
+     <StackPanel Margin="0,0,22,0" VerticalAlignment="Center"><TextBlock Text="{Binding Label}" FontWeight="SemiBold" FontSize="15"/><TextBlock Text="{Binding Description}" Style="{StaticResource CaptionText}" Margin="0,5,0,0"/></StackPanel>
+     <StackPanel Grid.Column="1" VerticalAlignment="Center"><ComboBox ItemsSource="{Binding Choices}" SelectedItem="{Binding Selected}" IsEnabled="{Binding Enabled}" Style="{StaticResource DarkComboBox}" AutomationProperties.Name="{Binding Label}"/><TextBlock Text="{Binding Availability}" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,4,0,0"><TextBlock.Style><Style TargetType="TextBlock"><Style.Triggers><DataTrigger Binding="{Binding Availability}" Value=""><Setter Property="Visibility" Value="Collapsed"/></DataTrigger></Style.Triggers></Style></TextBlock.Style></TextBlock></StackPanel>
+    </Grid>
+   </Border>
+  </DataTemplate>
+ </Window.Resources>
+ <Border BorderBrush="#383A3E" Background="#131416" BorderThickness="1" CornerRadius="10" ClipToBounds="True">
+ <Grid><Grid.RowDefinitions><RowDefinition Height="42"/><RowDefinition Height="55"/><RowDefinition Height="*"/></Grid.RowDefinitions>
+  <Grid Background="#161719"><TextBlock Text="RACE ONE HUB / BUILDER" FontSize="11" Foreground="#B5B7BB" VerticalAlignment="Center" Margin="22,0,150,0"/>
+   <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" shell:WindowChrome.IsHitTestVisibleInChrome="True"><Button Content="&#xE921;" Style="{StaticResource WindowButton}" Click="Minimize_Click" AutomationProperties.Name="Minimize"/><Button Content="&#xE922;" Style="{StaticResource WindowButton}" Click="Maximize_Click" AutomationProperties.Name="Maximize"/><Button Content="&#xE8BB;" Style="{StaticResource CloseWindowButton}" Click="Close_Click" AutomationProperties.Name="Close"/></StackPanel>
+  </Grid>
+  <Border Grid.Row="1" Background="#1A1B1E" BorderBrush="#33363B" BorderThickness="0,0,0,1">
+   <Grid Margin="24,0"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+    <StackPanel Orientation="Horizontal"><RadioButton x:Name="Fm5Tab" Content="Forza Motorsport 5" GroupName="Game" Tag="fm5" Style="{StaticResource GameTab}" IsChecked="True" Checked="GameTab_Checked" AutomationProperties.Name="Forza Motorsport 5"/></StackPanel>
+    <TextBlock Grid.Column="2" Text="FORZA COLLECTION · XBOX ONE" FontSize="10" Foreground="#8D929B" VerticalAlignment="Center"/>
+   </Grid>
+  </Border>
+  <Grid Grid.Row="2"><Grid.ColumnDefinitions><ColumnDefinition Width="210"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+   <Border Background="#191A1D" BorderBrush="#2B2D31" BorderThickness="0,0,1,0"><Grid Margin="20,28,20,20"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <StackPanel><TextBlock Text="LIBRARY" FontSize="11" Foreground="#888F99" Margin="8,0,0,19"/>
+     <RadioButton x:Name="OverviewNav" Content="Overview" GroupName="Navigation" Tag="0" Style="{StaticResource NavButton}" IsChecked="True" Checked="Navigation_Checked" Margin="0,0,0,8"/>
+     <RadioButton x:Name="VideoNav" Content="Video" GroupName="Navigation" Tag="1" Style="{StaticResource NavButton}" Checked="Navigation_Checked" Margin="0,0,0,8"/>
+     <RadioButton x:Name="AudioNav" Content="Audio &amp; language" GroupName="Navigation" Tag="2" Style="{StaticResource NavButton}" Checked="Navigation_Checked" Margin="0,0,0,8"/>
+     <RadioButton x:Name="CreditsNav" Content="Credits" GroupName="Navigation" Tag="3" Style="{StaticResource NavButton}" Checked="Navigation_Checked"/>
+    </StackPanel>
+    <StackPanel Grid.Row="2"><Button Content="Open logs" Style="{StaticResource GhostButton}" Click="OpenLogs_Click" Margin="0,0,0,8"/><Button Content="Donate" Style="{StaticResource PrimaryButton}" Click="Donate_Click" Margin="0,0,0,16" ToolTip="Support LoZazaMastro on Ko-fi" AutomationProperties.Name="Donate"/><TextBlock Text="Designed by LoZazaMastro" FontSize="10" Foreground="#9297A1" Margin="3,0,0,4"/></StackPanel>
+   </Grid></Border>
+   <Grid Grid.Column="1" Margin="32,27,32,22"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+    <StackPanel Margin="0,0,0,20"><TextBlock x:Name="Eyebrow" Text="FORZA MOTORSPORT 5" Foreground="{DynamicResource Accent}" FontSize="11" FontWeight="Bold" Margin="0,0,0,9"/><TextBlock x:Name="Heading" Text="Overview" FontSize="29" FontWeight="SemiBold"/><TextBlock x:Name="Subtitle" Text="" Style="{StaticResource BodyText}" Margin="0,7,0,0"/></StackPanel>
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,12,12">
+     <Grid>
+      <StackPanel x:Name="OverviewPage">
+       <Border x:Name="GameHero" CornerRadius="12" BorderBrush="#66FF8A44" BorderThickness="1" Padding="14,12" Margin="0,0,0,18">
+        <Border.Background><LinearGradientBrush StartPoint="0,0" EndPoint="1,1"><GradientStop x:Name="HeroGradient" Color="#26FF8A44" Offset="0"/><GradientStop Color="#1F2024" Offset="0.7"/></LinearGradientBrush></Border.Background>
+        <Grid MinHeight="80"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="110"/></Grid.ColumnDefinitions><StackPanel VerticalAlignment="Center"><TextBlock x:Name="GameTitle" Text="Forza Motorsport 5" FontFamily="Segoe UI" FontSize="32" FontWeight="Light" TextWrapping="NoWrap"/><Border Style="{StaticResource Pill}" HorizontalAlignment="Left" Margin="0,10,0,0"><TextBlock Text="PC / WINDOWS" FontSize="10" FontWeight="SemiBold"/></Border></StackPanel><TextBlock x:Name="GameNumber" Grid.Column="1" Text="5" FontSize="64" FontStyle="Italic" FontWeight="Black" Foreground="#55FF8A44" VerticalAlignment="Center" HorizontalAlignment="Center"/></Grid>
+       </Border>
+       <Border Style="{StaticResource Card}"><StackPanel>
+        <TextBlock Text="Build your game" Style="{StaticResource SectionHeading}"/>
+        <Grid Margin="0,4,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="112"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+         <TextBlock Text="Game files" FontWeight="SemiBold" VerticalAlignment="Center"/>
+         <TextBox x:Name="GamePath" Grid.Column="1" Padding="12,5" Height="44" IsReadOnly="True" AutomationProperties.Name="Game files folder" ToolTip="Choose the extracted game folder or its Mount folder."/>
+         <Button x:Name="GameBrowseButton" Grid.Column="2" Content="Browse" Style="{StaticResource GhostButton}" Click="BrowseGame_Click" Margin="10,0,0,0" AutomationProperties.Name="Browse game files"/>
+        </Grid>
+        <Grid Margin="0,14,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="112"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+         <TextBlock Text="Output folder" FontWeight="SemiBold" VerticalAlignment="Center"/>
+         <TextBox x:Name="OutputPath" Grid.Column="1" Padding="12,5" Height="44" IsReadOnly="True" AutomationProperties.Name="Output folder"/>
+         <Button x:Name="OutputBrowseButton" Grid.Column="2" Content="Browse" Style="{StaticResource GhostButton}" Click="BrowseOutput_Click" Margin="10,0,0,0" AutomationProperties.Name="Browse output folder"/>
+        </Grid>
+        <TextBlock Text="The game runs from this folder. Keep it at the same location." Style="{StaticResource CaptionText}" Margin="0,10,0,0"/>
+        <Grid Margin="0,14,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+         <CheckBox x:Name="DesktopShortcutBox" Content="Create a Desktop shortcut" Style="{StaticResource DarkCheck}" IsChecked="False" Checked="DesktopShortcut_Changed" Unchecked="DesktopShortcut_Changed"/>
+         <CheckBox x:Name="PreGameSettingsBox" Grid.Column="1" Content="Skip pre-game settings" Style="{StaticResource DarkCheck}" IsChecked="False" IsEnabled="False" Checked="PreGameSettings_Changed" Unchecked="PreGameSettings_Changed"/>
+        </Grid>
+        <TextBlock x:Name="PreGameWarning" Text="To change settings later, edit the configuration files manually or rebuild the game with new settings." Style="{StaticResource CaptionText}" Visibility="Collapsed" Margin="0,8,0,0"/>
+        <Border Margin="0,17,0,0" Padding="0,14,0,0">
+         <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+          <TextBlock x:Name="Summary" FontSize="14" TextWrapping="Wrap" VerticalAlignment="Center" Margin="0,0,14,0"/>
+          <Button Grid.Column="1" Content="Video settings" Style="{StaticResource GhostButton}" Click="Video_Click"/>
+         </Grid>
+        </Border>
+       </StackPanel></Border>
+      </StackPanel>
+      <StackPanel x:Name="VideoPage" Visibility="Collapsed"><Border Style="{StaticResource Card}"><StackPanel><TextBlock Text="Display &amp; graphics" Style="{StaticResource SectionHeading}"/><ItemsControl x:Name="VideoOptions" ItemTemplate="{StaticResource OptionTemplate}"/></StackPanel></Border></StackPanel>
+      <StackPanel x:Name="AudioPage" Visibility="Collapsed"><Border Style="{StaticResource Card}"><StackPanel><TextBlock Text="Audio &amp; language" Style="{StaticResource SectionHeading}"/><ItemsControl x:Name="AudioOptions" ItemTemplate="{StaticResource OptionTemplate}"/></StackPanel></Border></StackPanel>
+      <StackPanel x:Name="CreditsPage" Visibility="Collapsed"><Border Style="{StaticResource Card}"><StackPanel><TextBlock Text="Race One Hub" Style="{StaticResource SectionHeading}"/><TextBlock Text="Designed by LoZazaMastro" FontSize="16" Margin="0,0,0,18"/><TextBlock Style="{StaticResource BodyText}" Margin="0,0,0,16"><Hyperlink NavigateUri="https://almost-there-games.itch.io/azimuth" RequestNavigate="Reference_Navigate" Foreground="{DynamicResource Accent}">Azimuth</Hyperlink><Run Text=" - the Forza Horizon 2 Xbox One compatibility project for PC, by "/><Hyperlink NavigateUri="https://almost-there-games.itch.io/" RequestNavigate="Reference_Navigate" Foreground="{DynamicResource Accent}">Almost There Games</Hyperlink><Run Text=". Base runtime adapted for this project."/></TextBlock><TextBlock Text="Forza Motorsport 5 is by Turn 10 Studios / Microsoft Studios. This builder is not affiliated with Microsoft or Turn 10 Studios." Style="{StaticResource BodyText}"/><TextBlock Style="{StaticResource BodyText}" Margin="0,18,0,0"><Run Text="Research and API references: "/><Hyperlink NavigateUri="https://github.com/WinDurango/WinDurango" RequestNavigate="Reference_Navigate" Foreground="{DynamicResource Accent}">WinDurango</Hyperlink><Run Text=" / "/><Hyperlink NavigateUri="https://github.com/xwine1" RequestNavigate="Reference_Navigate" Foreground="{DynamicResource Accent}">XWine1</Hyperlink></TextBlock><Button Content="License and credits" Style="{StaticResource GhostButton}" HorizontalAlignment="Left" Click="License_Click" Margin="0,20,0,0"/></StackPanel></Border></StackPanel>
+     </Grid>
+    </ScrollViewer>
+    <Border Grid.Row="2" BorderBrush="#33353A" BorderThickness="0,1,0,0" Padding="0,18,0,0"><Grid><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions><StackPanel Margin="0,0,20,0" VerticalAlignment="Center"><TextBlock x:Name="StatusLabel" FontSize="12" Foreground="#B7BEC9" TextWrapping="Wrap"/><ProgressBar x:Name="BusyBar" Height="3" IsIndeterminate="True" Visibility="Collapsed" Margin="0,9,0,0" Style="{StaticResource FluentProgress}"/></StackPanel><Button x:Name="BuildButton" Grid.Column="1" Content="BUILD EXE   →" Style="{StaticResource PrimaryButton}" Click="Build_Click" MinWidth="200"/></Grid></Border>
+   </Grid>
+  </Grid>
+ </Grid></Border>
+</Window>

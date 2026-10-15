@@ -1,0 +1,5 @@
+pefile
+capstone
+Pillow
+# Optional backend packaging:
+pyinstaller

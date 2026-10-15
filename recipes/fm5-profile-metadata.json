@@ -1,0 +1,104 @@
+{
+  "schema": "forzamastro5-profile-metadata/1",
+  "passed": true,
+  "checksum_fields": [
+    {
+      "field": "0x18",
+      "path": "Mount/forza_durango_release_final.exe",
+      "fh2_sha256": "3ec04c6163fb5614e3d351ba0570d39b846041a257715d6340eceb03ccb7f0a3",
+      "fm5_sha256": "94dad21851d335e9a33231dc2a1de2ecd4b93eefdf5f6772085bf6886bf47db7",
+      "fh2_bytes": 58204160,
+      "fm5_bytes": 39317504
+    },
+    {
+      "field": "0x28",
+      "path": "Mount/hash.manifest",
+      "fh2_sha256": "56943e86659f7003eb66b9b23d8a5094e79bffa5d951d5439c98deb4f2a4a7b7",
+      "fm5_sha256": "68ccaadc51e6f950737df2f1e33f09e8f30742cb5dfb3bfb87d89217dd991873",
+      "fh2_bytes": 28980,
+      "fm5_bytes": 39192
+    },
+    {
+      "field": "0x38",
+      "path": "EmbeddedXvd/Windows/System32/xg_x.dll",
+      "fh2_sha256": "9e3a06d02784699c252bea271090b9e2a04ef2cb29b5b0647c6ce6e73b19db67",
+      "fm5_sha256": "9d198fcf130793cf0e2c742ff7e934bfd87c8ced0940b189413e52d6e874125a",
+      "fh2_bytes": 103936,
+      "fm5_bytes": 90112
+    },
+    {
+      "field": "0x48",
+      "path": "Mount/Microsoft.Xbox.Services.dll",
+      "fh2_sha256": "6ac44af5fda8ccfce5f4f60d9256deb9146a1ca0b24a351be0287ca547eb10d0",
+      "fm5_sha256": "2ad4b45a930b6258c66ceb7a4103e88cbeb2ef8dc28bb2467d07289bbd839272",
+      "fh2_bytes": 5718528,
+      "fm5_bytes": 5188608
+    },
+    {
+      "field": "0x60",
+      "path": "EmbeddedXvd/Windows/System32/config/SOFTWARE",
+      "fh2_sha256": "9b458bcf0bd5a11ce51c29ef8003c62c4de3015f1c129d82edaeb9d41d602aa4",
+      "fm5_sha256": "11b6903d567b8a65108c56f2d15b0bc6c4d2901c22868a183b498ab7b6397e1b",
+      "fh2_bytes": 1310720,
+      "fm5_bytes": 1572864
+    },
+    {
+      "field": "0x70",
+      "path": "EmbeddedXvd/Windows/System32/gameosproxy.dll",
+      "fh2_sha256": "f0bc1b810ceac1e8061284eb1a0b1dcb6a0d81ea5a5b3614c37e4fec66cc33f3",
+      "fm5_sha256": "43e144c74d531989ec11ac6b96685c07ee56d8e6644c06fef63d1966c4227fab",
+      "fh2_bytes": 807424,
+      "fm5_bytes": 717824
+    },
+    {
+      "field": "0x80",
+      "path": "EmbeddedXvd/Windows/System32/WinTypes.dll",
+      "fh2_sha256": "d8d5fdda0c91ad6fca8df046c878b11b8c22a8524ca54282417d2543977269ea",
+      "fm5_sha256": "aa85ad987f55698eb418d7e78655d74384522bfac27e60b2f6932f6b4b2c3490",
+      "fh2_bytes": 733696,
+      "fm5_bytes": 738816
+    },
+    {
+      "field": "0x90",
+      "path": "EmbeddedXvd/Windows/System32/Windows.Web.dll",
+      "fh2_sha256": "9465ed686b1053868c5a5e0de9693a7816cf859fb3a3e7e4e81ee3da9f132ed0",
+      "fm5_sha256": "36be920837929adc64038113fb486af45aecae725e96cc6fd79c33daed44914e",
+      "fh2_bytes": 149504,
+      "fm5_bytes": 149504
+    }
+  ],
+  "fm5_scalar_fields": {
+    "0x20": {
+      "decimal": 39317504,
+      "hex": "0x257f000"
+    },
+    "0x30": {
+      "decimal": 3266,
+      "hex": "0xcc2"
+    },
+    "0x40": {
+      "decimal": 90112,
+      "hex": "0x16000"
+    },
+    "0x50": {
+      "decimal": 5188608,
+      "hex": "0x4f2c00"
+    },
+    "0x98": {
+      "decimal": 41537536,
+      "hex": "0x279d000"
+    },
+    "0x9c": {
+      "decimal": 13270736,
+      "hex": "0xca7ed0"
+    },
+    "0xa0": {
+      "decimal": 580,
+      "hex": "0x244"
+    }
+  },
+  "limitations": [
+    "Profile 0x10 AppxManifest digest and title/version strings are handled by the parent builder.",
+    "These are file and image identities, not proof of runtime ABI compatibility."
+  ]
+}

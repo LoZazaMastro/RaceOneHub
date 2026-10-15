@@ -1,0 +1,20 @@
+{
+  "host_sha256": "579ed8d8b0b16cbf7890380cb7b925c972b837631ede367eada55eae4afc39bc",
+  "preserves": "All layout guards, import binding, relocation and original process attach remain active. Only exact expected size/entry constants change.",
+  "patches": [
+    {
+      "instruction_rva": "0x9f334",
+      "guard": "817d7800d00100",
+      "replacement": "817d7800b00100",
+      "immediate_rva": "0x9f337",
+      "purpose": "FM5 original XG PE image size"
+    },
+    {
+      "instruction_rva": "0x9f341",
+      "guard": "817d5084df0000",
+      "replacement": "817d5038c70000",
+      "immediate_rva": "0x9f344",
+      "purpose": "FM5 original XG PE entrypoint"
+    }
+  ]
+}
