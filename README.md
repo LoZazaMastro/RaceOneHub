@@ -19,8 +19,6 @@ The preview uses example folder paths. No game content appears in the image.
 - Languages detected from the selected game; stereo or system multichannel audio.
 - Optional Desktop shortcut; pre-game settings enabled by default.
 
-The current private PC implementation has been tested at 5K, MSAA 4x and 120 FPS. Performance varies by machine and scene. 6K, 7K and 8K have not been tested in-game yet.
-
 ![FM5 video settings](docs/screenshots/video.png)
 
 ## Known issue
