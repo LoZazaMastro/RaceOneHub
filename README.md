@@ -25,16 +25,6 @@ The preview uses example folder paths. No game content appears in the image.
 
 The Career menu can look washed out after a race. Press **B** to return to mode selection, then enter Career again. The underlying issue remains unresolved.
 
-## Build the interface
-
-On Windows with the .NET 8 SDK:
-
-```powershell
-dotnet build launcher/ForzaMastro.Launcher/ForzaMastro.Launcher.csproj -c Release
-```
-
-The interface accurately keeps **Build EXE** unavailable until its backend reports a prepared runtime. Compiling the interface alone does not prepare that runtime. [The backend protocol](launcher/README.md) and [source layout](docs/BUILDING.md) describe the boundaries.
-
 ## Credits
 
 - **Almost There Games** - [Azimuth](https://almost-there-games.itch.io/azimuth), the external base compatibility project. Its original/adapted binaries are not included.
