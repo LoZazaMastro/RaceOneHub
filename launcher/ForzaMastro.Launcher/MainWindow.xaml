@@ -57,7 +57,7 @@
          <TextBox x:Name="OutputPath" Grid.Column="1" Padding="12,5" Height="44" IsReadOnly="True" AutomationProperties.Name="Output folder"/>
          <Button x:Name="OutputBrowseButton" Grid.Column="2" Content="Browse" Style="{StaticResource GhostButton}" Click="BrowseOutput_Click" Margin="10,0,0,0" AutomationProperties.Name="Browse output folder"/>
         </Grid>
-        <TextBlock Text="The game runs from this folder. Keep it at the same location." Style="{StaticResource CaptionText}" Margin="0,10,0,0"/>
+        <TextBlock Text="Keep the original Game files folder in place." Style="{StaticResource CaptionText}" Margin="0,10,0,0"/>
         <Grid Margin="0,14,0,0"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
          <CheckBox x:Name="DesktopShortcutBox" Content="Create a Desktop shortcut" Style="{StaticResource DarkCheck}" IsChecked="False" Checked="DesktopShortcut_Changed" Unchecked="DesktopShortcut_Changed"/>
          <CheckBox x:Name="PreGameSettingsBox" Grid.Column="1" Content="Skip pre-game settings" Style="{StaticResource DarkCheck}" IsChecked="False" IsEnabled="False" Checked="PreGameSettings_Changed" Unchecked="PreGameSettings_Changed"/>

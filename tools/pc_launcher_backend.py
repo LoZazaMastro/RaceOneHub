@@ -128,8 +128,7 @@ def capabilities(root, game_folder=None, game_id="fm5"):
             'game_folder': selected_game, 'copies_user_game_files': False,
             'desktop_shortcut_supported': True,
             'preset_status': manifest.get('preset_status', {}),
-            'warnings': ['120 FPS is experimental.'] +
-                        ([] if ready else ['Supply and prepare the required runtime inputs before building. See docs/BUILDING.md.'])}
+            'warnings': ['120 FPS is experimental.']}
 
 
 def validate_settings(settings):
