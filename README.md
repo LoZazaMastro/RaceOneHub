@@ -1,6 +1,6 @@
 # Race One Hub
 
-A Windows PC builder and compatibility-adapter project for **Forza Motorsport 5**. Designed by **LoZazaMastro**.
+A Windows PC builder and compatibility-adapter project for **Forza Motorsport 5**.
 
 Choose your extracted game folder, graphics, audio and language settings. With a locally prepared runtime, the builder generates `RaceOne5.exe` and its supporting files. Your original game stays in its own folder and is not modified. The optional pre-game settings screen uses the same native window and process as the game.
 
