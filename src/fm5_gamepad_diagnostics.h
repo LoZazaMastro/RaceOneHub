@@ -2,6 +2,7 @@
 #define FM5_GAMEPAD_DIAGNOSTICS_H
 #include <windows.h>
 __declspec(dllexport) HRESULT WINAPI FM5SetGamepadVibration(void *self,const float *vibration);
+BOOL FM5InstallGamepadVibrationHook(void);
 #ifdef FM5_GAMEPAD_DIAGNOSTICS_TEST
 typedef struct FM5GamepadTestBackend {
     HRESULT (WINAPI *set)(void *,const float *);

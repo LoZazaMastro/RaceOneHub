@@ -23,7 +23,7 @@ BUILD.mkdir(parents=True, exist_ok=True)
 command = [str(VC / 'bin/Hostx64/x64/cl.exe'), '/nologo', '/W4', '/WX',
            '/O2', '/MT', '/LD',
            '/I' + str(VC / 'include')]
-for part in ['ucrt', 'shared', 'um']:
+for part in ['ucrt', 'shared', 'um', 'winrt']:
     command.append('/I' + str(SDK / 'Include' / SDK_VERSION / part))
 sources = [ROOT / 'src/fm5_import_bridge.c', ROOT / 'src/fm5_activation.c',
            ROOT / 'src/file-port/fm5_scene_files.c',
@@ -34,6 +34,9 @@ sources = [ROOT / 'src/fm5_import_bridge.c', ROOT / 'src/fm5_activation.c',
            ROOT / 'src/save-port/fm5_save_storage.c',
            ROOT / 'src/allocation-port/fm5_language.c',
            ROOT / 'src/fm5_gamepad_diagnostics.c',
+           ROOT / 'src/fm5_impulse_triggers.c',
+           ROOT / 'src/fm5_impulse_wgi.cpp',
+           ROOT / 'src/fm5_bridge_main.c',
            ROOT / 'src/graphics-port/fm5_frame_timing.c',
            ROOT / 'src/graphics-port/fm5_render_cadence.c',
            ROOT / 'src/graphics-port/fm5_queue_diagnostics.cpp',

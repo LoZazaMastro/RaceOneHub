@@ -33,6 +33,7 @@ Keep the generated files together and leave the original game folder in place. T
 - Resolutions from 1080p to 8K; 30, 60 and 120 FPS targets.
 - Original, Low, High and Ultra graphics presets; MSAA off, 2x or 4x; VSync and fullscreen/windowed display.
 - Languages detected from the selected game; stereo or system multichannel audio.
+- Impulse triggers on Xbox One and Series controllers: the triggers rumble as on the console.
 - Optional Desktop shortcut; pre-game settings enabled by default.
 
 ![FM5 video settings](docs/screenshots/video.png)
