@@ -19,6 +19,10 @@ import pefile
 
 GAME_SHA='94dad21851d335e9a33231dc2a1de2ecd4b93eefdf5f6772085bf6886bf47db7'
 ENGINE_SHA='579ed8d8b0b16cbf7890380cb7b925c972b837631ede367eada55eae4afc39bc'
+# The two original engine locale routines. The prepared host keeps them
+# unchanged, so either the original engine or the packaged host supplies them.
+HOST_GUARDS={'guard_host_locale':(0x37d00,0x37d6e,'2f93f07827a23c34e4c39c915365824485ac268c74c558b9a411afb980ee5814'),
+ 'guard_host_set_locale':(0x3abf0,0x3ac16,'0485868ebc10433cd716f52750ea35b848d6d5391fff3c30a40d79ce46afbedf')}
 EXPECTED_COMPILED={
  'fm5_resolve_four_samples':(1004,'e789a998553c5b626e9434989cded1df23836fc7c94bdb0ac7c8f436d0f7ab86'),
  'fm5_resolve_four_samples_tonemap':(4484,'c2dc26e17997a5a6637bdf07234fc378ddbc849e14f92e4a1426c4d6b1361846'),
@@ -152,9 +156,23 @@ def checked_output(path,inputs):
  if path.exists()and (not path.is_dir()or any(path.iterdir())):raise ValueError('Output must be absent or empty; nothing will be overwritten')
  return path
 
-def generate(game_exe:Path,engine_exe:Path,output_directory:Path,compiler_path:Path|None=None)->dict:
+def checked_host(path):
+ path=Path(path).expanduser()
+ if not path.is_absolute()or not path.is_file():raise ValueError('Prepared host must be an explicit existing absolute file')
+ raw=path.read_bytes();pe=pefile.PE(data=raw)
+ for name,(start,end,expected)in HOST_GUARDS.items():
+  if digest(pe.get_data(start,end-start))!=expected:raise ValueError('Prepared host does not retain the original '+name)
+ return path.resolve(),raw,pe
+
+def generate(game_exe:Path,engine_exe:Path|None,output_directory:Path,compiler_path:Path|None=None,prepared_host:Path|None=None)->dict:
  game_path,game_raw,game=checked_input(game_exe,GAME_SHA,'FM5 game executable')
- engine_path,engine_raw,engine=checked_input(engine_exe,ENGINE_SHA,'Original external engine')
+ if(engine_exe is None)==(prepared_host is None):raise ValueError('Supply either the original engine or the prepared host')
+ if engine_exe is not None:
+  engine_path,engine_raw,engine=checked_input(engine_exe,ENGINE_SHA,'Original external engine')
+  inputs={'game':GAME_SHA,'engine':ENGINE_SHA}
+ else:
+  engine_path,engine_raw,engine=checked_host(prepared_host)
+  inputs={'game':GAME_SHA,'prepared_host':digest(engine_raw)}
  out=checked_output(output_directory,[game_path,engine_path])
  if os.name!='nt':raise RuntimeError('Windows D3DCompiler is required for native shader generation')
  compiler=Path(compiler_path)if compiler_path is not None else Path(os.environ['SystemRoot'])/'System32/d3dcompiler_47.dll'
@@ -191,7 +209,7 @@ def generate(game_exe:Path,engine_exe:Path,output_directory:Path,compiler_path:P
    if cs[b'ISGN']!=original[b'ISGN']or cs[b'OSGN']!=original[b'OSGN']:raise ValueError('Generated shader signature mismatch')
    text+=add(name,data)
   outputs[f'fm5_resolve_{word}_samples.inc']=text.encode()
- report={'schema':1,'passed':True,'scope':'Private user-local generated includes only; not public payload','arrays':records,'array_count':len(records),'input_sha256':{'game':GAME_SHA,'engine':ENGINE_SHA},'compiler_sha256':digest(compiler.read_bytes()),'compiler_flags':{'four_samples':'0x8800 strictness plus O3','eight_samples':'0x800 strictness plus default O1'},'generated_shaders_match_existing_gpu_validated_hashes':True,'files':[{'path':name,'bytes':len(data),'sha256':digest(data)}for name,data in outputs.items()]}
+ report={'schema':1,'passed':True,'scope':'Private user-local generated includes only; not public payload','arrays':records,'array_count':len(records),'input_sha256':inputs,'compiler_sha256':digest(compiler.read_bytes()),'compiler_flags':{'four_samples':'0x8800 strictness plus O3','eight_samples':'0x800 strictness plus default O1'},'generated_shaders_match_existing_gpu_validated_hashes':True,'files':[{'path':name,'bytes':len(data),'sha256':digest(data)}for name,data in outputs.items()]}
  outputs['generation-report.json']=(json.dumps(report,indent=2)+'\n').encode()
  # Commit a complete set only after every input, transformation and compiled
  # result has passed. No source file or original input is ever changed.
@@ -206,7 +224,9 @@ def generate(game_exe:Path,engine_exe:Path,output_directory:Path,compiler_path:P
 
 def main():
  parser=argparse.ArgumentParser(description=__doc__)
- parser.add_argument('--game-exe',required=True,type=Path);parser.add_argument('--engine-exe',required=True,type=Path)
+ parser.add_argument('--game-exe',required=True,type=Path);host=parser.add_mutually_exclusive_group(required=True)
+ host.add_argument('--engine-exe',type=Path,help='Original Azimuth 0.9.9 azimuth.exe')
+ host.add_argument('--prepared-host',type=Path,help='Packaged runtime/pc/ForzaMastro5.exe; supplies the same two locale guards')
  parser.add_argument('--output-dir',required=True,type=Path);parser.add_argument('--compiler',type=Path)
- a=parser.parse_args();print(json.dumps(generate(a.game_exe,a.engine_exe,a.output_dir,a.compiler),indent=2))
+ a=parser.parse_args();print(json.dumps(generate(a.game_exe,a.engine_exe,a.output_dir,a.compiler,a.prepared_host),indent=2))
 if __name__=='__main__':main()
