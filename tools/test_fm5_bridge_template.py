@@ -85,4 +85,16 @@ class TemplateTests(unittest.TestCase):
  def test_prepared_host_changed_guard_refused(self):
   b=bytearray(self.host.read_bytes());b[0x200+0x37d00-0x1000]^=1;self.host.write_bytes(b)
   with self.assertRaisesRegex(ValueError,'locale guards'):tool.create_template(self.bridge,self.inc,self.host,self.root/'bad-template')
+ def edit_report(self,inputs):
+  path=self.inc/'generation-report.json';z=json.loads(path.read_text());z['input_sha256']=inputs;path.write_text(json.dumps(z))
+ def test_prepared_host_provenance_same_template(self):
+  self.edit_report({'game':tool.recipe.GAME_SHA,'prepared_host':'1'*64});other=self.root/'host-template'
+  tool.create_template(self.bridge,self.inc,self.host,other)
+  self.assertEqual((other/'ForzaMastro5Bridge.template').read_bytes(),self.template.read_bytes());self.assertEqual((other/'manifest.json').read_text(),self.manifest.read_text())
+ def test_unknown_provenance_refused(self):
+  for inputs in[{'game':'0'*64,'prepared_host':'1'*64},{'game':tool.recipe.GAME_SHA,'engine':'0'*64},{'game':tool.recipe.GAME_SHA,'engine':tool.recipe.ENGINE_SHA,'prepared_host':'1'*64}]:
+   self.edit_report(inputs)
+   with self.assertRaisesRegex(ValueError,'provenance'):tool.create_template(self.bridge,self.inc,self.host,self.root/'bad-template')
+ def test_generator_refuses_host_without_original_guards(self):
+  with self.assertRaisesRegex(ValueError,'does not retain'):tool.recipe.checked_host(self.host)
 if __name__=='__main__':unittest.main()

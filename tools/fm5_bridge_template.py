@@ -53,7 +53,9 @@ def _new_output(path):
 def _arrays(directory):
  directory=Path(directory)
  report=json.loads((directory/'generation-report.json').read_text(encoding='utf-8'))
- if report.get('array_count')!=28 or report.get('input_sha256')!={'game':recipe.GAME_SHA,'engine':recipe.ENGINE_SHA}:raise ValueError('Unrecognized include generation provenance')
+ inputs=report.get('input_sha256')
+ from_host=isinstance(inputs,dict)and set(inputs)=={'game','prepared_host'}and inputs['game']==recipe.GAME_SHA
+ if report.get('array_count')!=28 or inputs!={'game':recipe.GAME_SHA,'engine':recipe.ENGINE_SHA}and not from_host:raise ValueError('Unrecognized include generation provenance')
  records={r['name']:r for r in report['arrays']};values={}
  for filename in INCLUDES:
   text=(directory/filename).read_text(encoding='utf-8')
