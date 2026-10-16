@@ -114,6 +114,7 @@ public sealed class LauncherModel
     public string LogsPath => Path.Combine(ProjectRoot, "runtime", RuntimeDirectory, "data", "logs");
     public string PackagedBackend => Path.Combine(ProjectRoot, "launcher", "backend", "ForzaMastro5Backend.exe");
     public string DevelopmentBackend => Path.Combine(ProjectRoot, "tools", "pc_launcher_backend.py");
+    public string DevelopmentPython => Path.Combine(ProjectRoot, ".venv", "Scripts", "python.exe");
     public BackendCapabilities? Backend { get; private set; }
     private bool hasSavedSettings;
     private Dictionary<string, string> savedSelections = [];
@@ -260,7 +261,8 @@ public sealed class LauncherModel
         if (File.Exists(PackagedBackend)) info = new(PackagedBackend);
         else if (File.Exists(DevelopmentBackend))
         {
-            info = new("python");
+            // A source checkout's own virtualenv has the backend's packages; PATH python may not.
+            info = new(File.Exists(DevelopmentPython) ? DevelopmentPython : "python");
             info.ArgumentList.Add(DevelopmentBackend);
         }
         else throw new FileNotFoundException("PC backend is not available yet.");
