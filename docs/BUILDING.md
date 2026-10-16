@@ -24,7 +24,7 @@ Only named support files enter the payload. The actual game executable, game ass
 
 ## Native engine and adapter development
 
-Native development requires the Visual Studio 2022 x64 C++ compiler, MASM and Windows SDK. The verified developer toolchain is MSVC 14.44.35207 with Windows SDK 10.0.26100.0. Python 3.11+ is used for patch recipes, tests and packaging; the backend is frozen for the release, so Python is not required on the user's PC.
+Native development requires the Visual Studio 2022 x64 C++ compiler, MASM and Windows SDK. The verified developer toolchain is MSVC 14.44.35207 with Windows SDK 10.0.26100.0. Python 3.11+ is used for patch recipes, tests and packaging; the backend is frozen for the release, so Python is not required on the user's PC. A source-built interface runs the development backend with the checkout's `.venv\Scripts\python.exe` when that exists, otherwise with `python` from `PATH`.
 
 The compatibility host is derived from Azimuth 0.9.9. It is not rebuilt from these adapter sources. Developer host preparation requires that exact original engine and its notices; native source and recipe files do not substitute for the engine. Original game/engine identity checks are recorded in `recipes/runtime-inputs.json` and the other reviewed recipe files. All external copyrights and license notices remain applicable.
 
