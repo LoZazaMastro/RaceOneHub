@@ -4,7 +4,7 @@ A Windows PC builder and compatibility-adapter project for **Forza Motorsport 5*
 
 [Download RaceOneHub.exe](https://github.com/LoZazaMastro/RaceOneHub/releases/latest/download/RaceOneHub.exe)
 
-If you like it and want to support me you can [donate here]([https://ko-fi.com/lozazamastro])
+If you like it and want to support me you can [donate here](https://ko-fi.com/lozazamastro)
 
 Choose your extracted game folder, graphics, audio and language settings. The builder generates `RaceOne5.exe` and its supporting files. Your original game stays in its own folder and is not modified. The optional pre-game settings screen uses the same native window and process as the game.
 
